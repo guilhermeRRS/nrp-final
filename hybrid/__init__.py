@@ -63,6 +63,8 @@ class Hybrid:
 
     from .maths._forSingleMany import math_singleMany, math_singleMany_demand
 
+    from .maths._forSeq import math_sequence
+
     #####options
     from .getters._forSingle import getSingle
 
@@ -73,12 +75,13 @@ class Hybrid:
     from .runs._run_single import run_single
     from .runs._run_singleMany import run_singleMany, investigate_singleMany
 
-    from .runs._run_seqFromModel import run_seqFromModel, run_seqFromModel_fixed
+    from .runs._run_seqFromModel import run_seqFromModel
     from .runs._run_seqNursesFromModel import run_seqNurseFromModel
 
     #####commits
     from .commits._commit_single import commit_single
     from .commits._commit_singleMany import commit_singleMany
+    from .commits._commit_seq import commit_sequence
 
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_teste

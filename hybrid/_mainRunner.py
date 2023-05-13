@@ -40,11 +40,11 @@ def main_runSingleMany(self, numberOfNurses:int):
 def main_teste(self):
     
     while self.chronos.stillValidRestrict():
-        rangeOfSequences = 2
-        s, move = self.run_seqNurseFromModel(numberOfNurses = 5, rangeOfSequences = rangeOfSequences, worse = False, better = True, equal = False)
+        rangeOfSequences = 100
+        s, move = self.run_seqFromModel(rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = False, better = True, equal = False)
         
         if s:
-            self.commit_sequenceMany(move)
+            self.commit_sequence(move)
             print(self.penalties.total)
             #numberSuccess += 1
         else:
