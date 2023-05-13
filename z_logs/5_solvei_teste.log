@@ -1,0 +1,104 @@
+
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 01:25:38.248216 | INICIALIZATION |
+
+===== CHRONOS_MANAGER =====
+Root time:		2023-05-13 01:25:38.248216
+Time limit:		49.744
+Valid:		True
+TimeLeft:		49.744
+Size:		0
+===============
+
+<<<<<<<<<<<<<<<
+
+
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 01:25:38.290786 | CHRONOS_MARK_START |
+
+===== CHRONOS_COUNTER =====
+Name:		START_SETTING_START
+Log:		True
+Start:		2023-05-13 01:25:38.290786
+Stop Condition:		49.70143
+Valid:		True
+TimeLeft:		49.700434
+===============
+
+<<<<<<<<<<<<<<<
+
+
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 01:25:38.297802 | CHRONOS_MARK_STOP |
+
+===== CHRONOS_COUNTER =====
+Name:		START_SETTING_START
+Log:		True
+Start:		2023-05-13 01:25:38.290786
+Stop Condition:		49.70143
+Valid:		True
+TimeLeft:		49.694414
+===============
+
+<<<<<<<<<<<<<<<
+
+
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 01:25:38.298619 | CHRONOS_MARK_START |
+
+===== CHRONOS_COUNTER =====
+Name:		START_OPTIMIZE
+Log:		True
+Start:		2023-05-13 01:25:38.298619
+Stop Condition:		49.693597
+Valid:		True
+TimeLeft:		49.693597
+===============
+
+<<<<<<<<<<<<<<<
+
+
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 01:26:28.046162 | CHRONOS_MARK_STOP |
+
+===== CHRONOS_COUNTER =====
+Name:		START_OPTIMIZE
+Log:		True
+Start:		2023-05-13 01:25:38.298619
+Stop Condition:		49.693597
+Valid:		False
+TimeLeft:		0
+===============
+
+<<<<<<<<<<<<<<<
+
+
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-13 01:26:28.049156 | SOLVER_GUROBI_OUTPUT |
+
+===== GUROBI_OPTIMIZE_OUTPUT =====
+Status:		9
+SolCount:		10
+Valid:		True
+Obj:		1145.0
+===============
+
+<<<<<<<<<<<<<<<
+
+
+>>>>> INFO | ORIGIN_MAIN | 2023-05-13 01:26:28.055150 | 
+SUCCESS_SOLVED
+<<<<<<<<<<<<<<<
+
+
+>>>>> INFO | ORIGIN_MAIN | 2023-05-13 01:26:28.057147 | 
+SOLUTION_PRINTING_SUCCESS
+<<<<<<<<<<<<<<<
+
+
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 01:26:28.057147 | FINISHED |
+
+===== CHRONOS_MANAGER =====
+Root time:		2023-05-13 01:25:38.248216
+Time limit:		49.744
+Valid:		False
+TimeLeft:		0
+Size:		0
+===============
+
+<<<<<<<<<<<<<<<
+
