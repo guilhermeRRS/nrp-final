@@ -47,12 +47,7 @@ def preProcessFromSolution(self):
 
     r_t_plain = []
     self.helperVariables.oneInnerJourney_rt = {"free": {"free": []}}
-    self.helperVariables.twoInnerJourney_rt = {"free": {"free": []}}
-    self.helperVariables.threeInnerJourney_rt = {"free": {"free": []}}
-    self.helperVariables.fourInnerJourney_rt = {"free": {"free": []}}
-    self.helperVariables.fiveInnerJourney_rt = {"free": {"free": []}}
-    self.helperVariables.sixInnerJourney_rt = {"free": {"free": []}}
-
+    
     #equivalence = []
     for t in range(self.nurseModel.T):
         #equivalence.append(self.nurseModel.data.sets.R_t.index(self.nurseModel.data.sets.R_t[t]))
@@ -73,25 +68,11 @@ def preProcessFromSolution(self):
 
         self.helperVariables.oneInnerJourney_rt["free"][t] = []
         self.helperVariables.oneInnerJourney_rt[t] = {"free": []}
-        self.helperVariables.twoInnerJourney_rt["free"][t] = []
-        self.helperVariables.twoInnerJourney_rt[t] = {"free": []}
-        self.helperVariables.threeInnerJourney_rt["free"][t] = []
-        self.helperVariables.threeInnerJourney_rt[t] = {"free": []}
-        self.helperVariables.fourInnerJourney_rt["free"][t] = []
-        self.helperVariables.fourInnerJourney_rt[t] = {"free": []}
-        self.helperVariables.fiveInnerJourney_rt["free"][t] = []
-        self.helperVariables.fiveInnerJourney_rt[t] = {"free": []}
         #not needed more, the max of all instances is 6 workDays
 
         for t2 in range(self.nurseModel.T):
             self.helperVariables.oneInnerJourney_rt[t][t2] = []
-            self.helperVariables.twoInnerJourney_rt[t][t2] = []
-            self.helperVariables.threeInnerJourney_rt[t][t2] = []
-            self.helperVariables.fourInnerJourney_rt[t][t2] = []
-            #not needed, the max of all instances is 6 workDays and this is used for 7
-            self.helperVariables.fiveInnerJourney_rt[t][t2] = []
-    
-
+            
     self.penalties.total = self.penalties.demand + self.penalties.preference_total
 
     #print("The monster")
@@ -99,16 +80,8 @@ def preProcessFromSolution(self):
     self.highest_cmax = highest_cmax
 
     sizedTwoStarting = {}
-    sizedThreeStarting = {}
-    sizedFourStarting = {}
-    sizedFiveStarting = {}
-    sizedSixStarting = {}
     for t in range(self.nurseModel.T):
         sizedTwoStarting[t] = []
-        sizedThreeStarting[t] = []
-        sizedFourStarting[t] = []
-        sizedFiveStarting[t] = []
-        sizedSixStarting[t] = []
     
     #print("The monster for sized 2")
     sizedTwo = []
@@ -123,91 +96,6 @@ def preProcessFromSolution(self):
             freeAfter = [tEnd]
             self.helperVariables.oneInnerJourney_rt["free"][tEnd].append({"s": freeFirst, "w": self.computeLt(freeFirst)})
             self.helperVariables.oneInnerJourney_rt[tStart]["free"].append({"s": freeAfter, "w": self.computeLt(freeAfter)})
-
-            self.helperVariables.twoInnerJourney_rt["free"]["free"].append({"s": newSequence, "w": self.computeLt(newSequence)})
-    
-    #print("The monster for sized 3")
-    sizedThree = []
-    for sequence1 in sizedTwo:
-        tEndingFirst = sequence1[-1]
-        for sequence2 in sizedTwoStarting[tEndingFirst]:
-            newSequence = [sequence1[0], sequence1[1], sequence2[1]]
-            sizedThree.append(newSequence)
-            sizedThreeStarting[sequence1[0]].append(newSequence)
-            
-            ##Setting the global vars
-            innerSeq = [sequence1[1]]
-            freeAfter = [sequence1[1], sequence2[1]]
-            freeFirst = sequence1
-            self.helperVariables.oneInnerJourney_rt[sequence1[0]][sequence2[-1]].append({"s": innerSeq, "w": self.computeLt(innerSeq)})
-            self.helperVariables.twoInnerJourney_rt[sequence1[0]]["free"].append({"s": freeAfter, "w": self.computeLt(freeAfter)})
-            self.helperVariables.twoInnerJourney_rt["free"][sequence2[-1]].append({"s": freeFirst, "w": self.computeLt(freeFirst)})
-            self.helperVariables.threeInnerJourney_rt["free"]["free"].append({"s": newSequence, "w": self.computeLt(newSequence)})
-    
-    #print("The monster for sized 4")
-    if highest_cmax >= 4:
-        sizedFour = []
-        for sequence1 in sizedTwo:
-            tEndingFirst = sequence1[-1]
-            for tStartingSecond in r_t_plain[tEndingFirst]:
-                for sequence2 in sizedTwoStarting[tStartingSecond]:
-                    newSequence = sequence1 + sequence2
-                    sizedFour.append(newSequence)
-                    sizedFourStarting[sequence1[0]].append(newSequence)
-                    
-                    ##Setting the global vars
-                    innerSeq = [sequence1[1], sequence2[0]]
-                    freeAfter = [sequence1[1]] + sequence2
-                    freeFirst = sequence1 + [sequence2[0]]
-                    self.helperVariables.twoInnerJourney_rt[sequence1[0]][sequence2[-1]].append({"s": innerSeq, "w": self.computeLt(innerSeq)})
-                    self.helperVariables.threeInnerJourney_rt[sequence1[0]]["free"].append({"s": freeAfter, "w": self.computeLt(freeAfter)})
-                    self.helperVariables.threeInnerJourney_rt["free"][sequence2[-1]].append({"s": freeFirst, "w": self.computeLt(freeFirst)})
-                    self.helperVariables.fourInnerJourney_rt["free"]["free"].append({"s": newSequence, "w": self.computeLt(newSequence)})
-            
-    #print("The monster for sized 5")
-    if highest_cmax >= 5:
-        sizedFive = []
-        for sequence1 in sizedTwo:
-            tEndingFirst = sequence1[-1]
-            for tStartingSecond in r_t_plain[tEndingFirst]:
-                for sequence2 in sizedThreeStarting[tStartingSecond]:
-                    newSequence = sequence1 + sequence2
-                    #sizedFive.append(newSequence)
-                    #sizedFiveStarting[sequence1[0]].append(newSequence)
-                    
-                    ##Setting the global vars
-                    innerSeq = [sequence1[1], sequence2[0], sequence2[1]]
-                    freeAfter = [sequence1[1]] + sequence2
-                    freeFirst = sequence1 + [sequence2[0], sequence2[1]]
-                    self.helperVariables.threeInnerJourney_rt[sequence1[0]][sequence2[-1]].append({"s": innerSeq, "w": self.computeLt(innerSeq)})
-                    self.helperVariables.fourInnerJourney_rt[sequence1[0]]["free"].append({"s": freeAfter, "w": self.computeLt(freeAfter)})
-                    self.helperVariables.fourInnerJourney_rt["free"][sequence2[-1]].append({"s": freeFirst, "w": self.computeLt(freeFirst)})
-                    self.helperVariables.fiveInnerJourney_rt["free"]["free"].append({"s": newSequence, "w": self.computeLt(newSequence)})
-            
-    #print("The monster for sized 6")
-    if highest_cmax >= 6:
-        sizedSix = []
-        iterador = 0
-        for sequence1 in sizedThree:
-            iterador += 1
-            tEndingFirst = sequence1[-1]
-            iterador2 = 0
-            for tStartingSecond in r_t_plain[tEndingFirst]:
-                iterador2 += 1
-                #adicionar aqui a linha de equivalente
-                for sequence2 in sizedThreeStarting[tStartingSecond]:
-                    newSequence = sequence1 + sequence2
-                    #sizedSix.append(newSequence)
-                    #sizedSixStarting[sequence1[0]].append(newSequence)
-                    
-                    ##Setting the global vars
-                    innerSeq = [sequence1[1], sequence2[2], sequence2[0], sequence2[1]]
-                    freeAfter = [sequence1[1], sequence2[2]] + sequence2
-                    freeFirst = sequence1 + [sequence2[0], sequence2[1]]
-                    self.helperVariables.fourInnerJourney_rt[sequence1[0]][sequence2[-1]].append({"s": innerSeq, "w": self.computeLt(innerSeq)})
-                    self.helperVariables.fiveInnerJourney_rt[sequence1[0]]["free"].append({"s": freeAfter, "w": self.computeLt(freeAfter)})
-                    self.helperVariables.fiveInnerJourney_rt["free"][sequence2[-1]].append({"s": freeFirst, "w": self.computeLt(freeFirst)})
-                    self.helperVariables.sixInnerJourney_rt["free"]["free"].append({"s": newSequence, "w": self.computeLt(newSequence)})
 
 def preProcess(self):
     self.preProcessFromSolution()
@@ -229,11 +117,6 @@ def preProcess(self):
     self.problemJourneyData = {
         "highest_cmax": self.highest_cmax,
         "oneInnerJourney_rt": self.helperVariables.oneInnerJourney_rt,
-        "twoInnerJourney_rt": self.helperVariables.twoInnerJourney_rt,
-        "threeInnerJourney_rt": self.helperVariables.threeInnerJourney_rt,
-        "fourInnerJourney_rt": self.helperVariables.fourInnerJourney_rt,
-        "fiveInnerJourney_rt": self.helperVariables.fiveInnerJourney_rt,
-        "sixInnerJourney_rt": self.helperVariables.sixInnerJourney_rt,
     } 
 
 ###################################################################
@@ -263,11 +146,6 @@ def getPreProcessData(self):
     
     self.highest_cmax = problemJourneyData["highest_cmax"]
     self.helperVariables.oneInnerJourney_rt = problemJourneyData["oneInnerJourney_rt"]
-    self.helperVariables.twoInnerJourney_rt = problemJourneyData["twoInnerJourney_rt"]
-    self.helperVariables.threeInnerJourney_rt = problemJourneyData["threeInnerJourney_rt"]
-    self.helperVariables.fourInnerJourney_rt = problemJourneyData["fourInnerJourney_rt"]
-    self.helperVariables.fiveInnerJourney_rt = problemJourneyData["fiveInnerJourney_rt"]
-    self.helperVariables.sixInnerJourney_rt = problemJourneyData["sixInnerJourney_rt"]
 
     self.parallelModels = []
 

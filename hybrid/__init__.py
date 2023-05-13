@@ -51,6 +51,7 @@ class Hybrid:
     #####utils
     from .utils._prePro import preProcessFromSolution, preProcess, getPreProcessData
     from .utils._forShifts import computeLt, shiftFreeMark, shiftFreeUnMark
+    from .utils._forShifts import getSequenceWorkMarks, getRangeRewrite
     
     #####generators
     from .generators._generateSingleNurseModel import generateSingleNurseModel
@@ -72,12 +73,15 @@ class Hybrid:
     from .runs._run_single import run_single
     from .runs._run_singleMany import run_singleMany, investigate_singleMany
 
+    from .runs._run_seqFromModel import run_seqFromModel, run_seqFromModel_fixed
+    from .runs._run_seqNursesFromModel import run_seqNurseFromModel
+
     #####commits
     from .commits._commit_single import commit_single
     from .commits._commit_singleMany import commit_singleMany
 
     #####main runner
-    from ._mainRunner import main_runSingle, main_runSingleMany
+    from ._mainRunner import main_runSingle, main_runSingleMany, main_teste
     
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         self.nurseModel = nurseModel
@@ -99,7 +103,7 @@ class Hybrid:
         while self.chronos.stillValidRestrict():
 
             #self.main_runSingleMany(3)
-            self.main_runSingle()
+            self.main_teste()
             break
 
         ########################################

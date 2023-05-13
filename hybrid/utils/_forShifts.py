@@ -28,3 +28,51 @@ def shiftFreeUnMark(self, shift):
     if shift == "free":
         return -1
     return str(shift)
+
+def getSequenceWorkMarks(self, nurse, day):
+    dayStart = day
+    dayEnd = day
+    iter = dayStart
+    while iter in self.helperVariables.workingDays[nurse]:
+        iter -= 1
+    dayStart = iter + 1
+    iter = dayEnd
+    while iter in self.helperVariables.workingDays[nurse]:
+        iter += 1
+    dayEnd = iter - 1
+    
+    return dayStart, dayEnd
+
+def getRangeRewrite(self, nurse, day, rangeOfSequences):
+    
+    dayStart, dayEnd = self.getSequenceWorkMarks(nurse, day)
+    
+    iter = dayStart - 1
+    while not (iter in self.helperVariables.workingDays[nurse]) and iter >= 0:
+        iter -= 1
+    dayStart = iter + 1
+    
+    iter = dayEnd + 1
+    while not (iter in self.helperVariables.workingDays[nurse]) and iter < self.nurseModel.D:
+        iter += 1
+    dayEnd = iter - 1
+    
+    for i in range(1,rangeOfSequences):
+        if i % 2 == 0:
+            iter = dayStart - 1
+            while iter in self.helperVariables.workingDays[nurse] and iter >= 0:
+                iter -= 1
+                
+            while not (iter in self.helperVariables.workingDays[nurse]) and iter >= 0:
+                iter -= 1
+            dayStart = iter + 1
+        else:
+            iter = dayEnd + 1
+            while iter in self.helperVariables.workingDays[nurse] and iter < self.nurseModel.D:
+                iter += 1
+                
+            while not (iter in self.helperVariables.workingDays[nurse]) and iter < self.nurseModel.D:
+                iter += 1
+            dayEnd = iter - 1
+
+    return dayStart, dayEnd

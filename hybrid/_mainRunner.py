@@ -35,3 +35,20 @@ def main_runSingleMany(self, numberOfNurses:int):
         print(numberSuccess)
         if numberSuccess < 0.001*numberOfIters:
             break
+
+
+def main_teste(self):
+    
+    while self.chronos.stillValidRestrict():
+        rangeOfSequences = 2
+        s, move = self.run_seqNurseFromModel(numberOfNurses = 5, rangeOfSequences = rangeOfSequences, worse = False, better = True, equal = False)
+        
+        if s:
+            self.commit_sequenceMany(move)
+            print(self.penalties.total)
+            #numberSuccess += 1
+        else:
+            print(".")
+        
+    #if not self.chronos.stillValidRestrict():
+    #    break
