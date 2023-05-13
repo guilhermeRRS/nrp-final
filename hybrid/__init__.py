@@ -28,6 +28,10 @@ class penalties:
 
     total: int
 
+class tmp:
+
+    zero = 0
+
 class HelperVariables:
 
     shiftTypeCounter: TwoDimInt
@@ -56,6 +60,8 @@ class Hybrid:
     from .maths._forSingle import math_single_preferenceDelta, math_single_preference
     from .maths._forSingle import math_single_demandDelta, math_single_demand
 
+    from .maths._forSingleMany import math_singleMany, math_singleMany_demand
+
     #####options
     from .getters._forSingle import getSingle
 
@@ -64,12 +70,14 @@ class Hybrid:
 
     #####run
     from .runs._run_single import run_single
+    from .runs._run_singleMany import run_singleMany, investigate_singleMany
 
     #####commits
     from .commits._commit_single import commit_single
+    from .commits._commit_singleMany import commit_singleMany
 
     #####main runner
-    from ._mainRunner import main_runSingle
+    from ._mainRunner import main_runSingle, main_runSingleMany
     
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         self.nurseModel = nurseModel
@@ -77,6 +85,7 @@ class Hybrid:
         self.chronos = chronos
         self.helperVariables = HelperVariables()
         self.penalties = penalties()
+        self.tmp = tmp()
 
     
     def run(self, startObj):
@@ -89,6 +98,7 @@ class Hybrid:
         print("Start working")
         while self.chronos.stillValidRestrict():
 
+            #self.main_runSingleMany(3)
             self.main_runSingle()
             break
 
