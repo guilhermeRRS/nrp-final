@@ -11,14 +11,13 @@ def commit_sequenceMany(self, moves):
         dayStart = move["dayStart"]
         duration = move["length"]
 
-        oldShifts = self.helperVariables.projectedX[nurse][dayStart:(dayStart+duration)]
         newShifts = move["s"]
 
-        for day in range(dayStart, dayStart+duration):
+        for dayIndex in range(duration):
 
-            dayIndex = day - dayStart
+            day = dayIndex + dayStart
 
-            oldShift = oldShifts[dayIndex]
+            oldShift = self.helperVariables.projectedX[nurse][day]
             newShift = newShifts[dayIndex]
             
             self.helperVariables.projectedX[nurse][day] = newShift
@@ -31,6 +30,8 @@ def commit_sequenceMany(self, moves):
                 self.helperVariables.workloadCounter[nurse] -= self.nurseModel.data.parameters.l_t[oldShift]
         
                 self.penalties.numberNurses[day][oldShift] -= 1
+
+                self.helperVariables.workingDays[nurse].remove(day)
             
             if newShift >= 0:
                 self.nurseModel.model.x[nurse][day][newShift].lb = 1
@@ -38,6 +39,8 @@ def commit_sequenceMany(self, moves):
                 
                 self.helperVariables.shiftTypeCounter[nurse][newShift] += 1
                 self.helperVariables.workloadCounter[nurse] += self.nurseModel.data.parameters.l_t[newShift]
+                
+                self.helperVariables.workingDays[nurse].append(day)
                 
                 self.penalties.numberNurses[day][newShift] += 1
 

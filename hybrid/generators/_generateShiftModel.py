@@ -18,6 +18,10 @@ def generateShiftModel(self):
     y = [[shift_model.addVar(vtype=GRB.INTEGER) for k in range(len(sets.T))] for j in range(len(sets.D))]    
 
     for i in range(len(sets.I)):
+    
+        shift_model.addConstr(parameters.b_min[i] <= gp.quicksum(sm_x[i][j][k]*parameters.l_t[k] for j in range(len(sets.D)) for k in range(len(sets.T))))
+        shift_model.addConstr(gp.quicksum(sm_x[i][j][k]*parameters.l_t[k] for j in range(len(sets.D)) for k in range(len(sets.T))) <= parameters.b_max[i])
+        
         for j in range(len(sets.D) - 1):
             for k in range(len(sets.T)):
                 shift_model.addConstr(parameters["q"][i][j][k]*(1 - sm_x[i][j][k]) + parameters["p"][i][j][k]*sm_x[i][j][k] == v[i][j][k])
@@ -36,9 +40,6 @@ def generateShiftModel(self):
                 shift_model.addConstr(sm_x[i][d][k] == 0)
                 
             shift_model.addConstr(gp.quicksum(sm_x[i][j][k] for j in range(len(sets.D))) <= parameters.m_max[i][k])
-    
-        shift_model.addConstr(parameters.b_min[i] <= gp.quicksum(sm_x[i][j][k]*parameters.l_t[k] for j in range(len(sets.D)) for k in range(len(sets.T))))
-        shift_model.addConstr(gp.quicksum(sm_x[i][j][k]*parameters.l_t[k] for j in range(len(sets.D)) for k in range(len(sets.T))) <= parameters.b_max[i])
 	
     for d in range(D):
         for t in range(T):

@@ -4,7 +4,6 @@ def preProcessFromSolution(self):
     #print("Generating")
     self.helperVariables.shiftTypeCounter = []
     self.helperVariables.workloadCounter = []
-    self.helperVariables.weekendCounter = []
     self.helperVariables.projectedX = []
     self.helperVariables.workingDays = []
 
@@ -20,7 +19,6 @@ def preProcessFromSolution(self):
     for i in range(self.nurseModel.I):
         self.helperVariables.shiftTypeCounter.append([])
         self.helperVariables.workloadCounter.append(0)
-        self.helperVariables.weekendCounter.append([])
         self.helperVariables.projectedX.append([])
         self.helperVariables.workingDays.append([])
         
@@ -38,9 +36,6 @@ def preProcessFromSolution(self):
                     self.helperVariables.projectedX[-1][d] = t
                     self.helperVariables.workingDays[-1].append(d)
                     self.penalties.numberNurses[d][t] += 1
-
-        for w in range(self.nurseModel.W):
-            self.helperVariables.weekendCounter[-1].append(1 if (self.helperVariables.projectedX[-1][7*w+5] + self.helperVariables.projectedX[-1][7*w+6]) > 0.5 else 0)
     
     #print("Demanding & setting")
     self.penalties.demand = 0
@@ -103,7 +98,6 @@ def preProcess(self):
         "helperVariables": {
             "shiftTypeCounter": self.helperVariables.shiftTypeCounter,
             "workloadCounter": self.helperVariables.workloadCounter,
-            "weekendCounter": self.helperVariables.weekendCounter,
             "projectedX": self.helperVariables.projectedX,
             "workingDays": self.helperVariables.workingDays,
         },
@@ -132,7 +126,6 @@ def getPreProcessData(self):
     
     self.helperVariables.shiftTypeCounter = solutionData["helperVariables"]["shiftTypeCounter"]
     self.helperVariables.workloadCounter = solutionData["helperVariables"]["workloadCounter"]
-    self.helperVariables.weekendCounter = solutionData["helperVariables"]["weekendCounter"]
     self.helperVariables.projectedX = solutionData["helperVariables"]["projectedX"]
     self.helperVariables.workingDays = solutionData["helperVariables"]["workingDays"]
     

@@ -88,7 +88,7 @@ class Hybrid:
     from .commits._commit_seqMany import commit_sequenceMany
 
     #####main runner
-    from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_teste
+    from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
     
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         self.nurseModel = nurseModel
@@ -110,7 +110,7 @@ class Hybrid:
         while self.chronos.stillValidRestrict():
 
             #self.main_runSingleMany(3)
-            self.main_seqFromModel()
+            self.main_seqNursesFromModel()
             break
 
         ########################################

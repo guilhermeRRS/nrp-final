@@ -26,6 +26,8 @@ def commit_sequence(self, move):
             self.helperVariables.workloadCounter[nurse] -= self.nurseModel.data.parameters.l_t[oldShift]
     
             self.penalties.numberNurses[day][oldShift] -= 1
+
+            self.helperVariables.workingDays[nurse].remove(day)
         
         if newShift >= 0:
             self.nurseModel.model.x[nurse][day][newShift].lb = 1
@@ -33,6 +35,8 @@ def commit_sequence(self, move):
             
             self.helperVariables.shiftTypeCounter[nurse][newShift] += 1
             self.helperVariables.workloadCounter[nurse] += self.nurseModel.data.parameters.l_t[newShift]
+                
+            self.helperVariables.workingDays[nurse].append(day)
             
             self.penalties.numberNurses[day][newShift] += 1
 

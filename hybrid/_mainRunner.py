@@ -49,15 +49,18 @@ def main_seqFromModel(self):
             print(self.penalties.total)
             #numberSuccess += 1
 
-def main_teste(self):
+def main_seqNursesFromModel(self):
     
-    while self.chronos.stillValidRestrict():
+    sTries = 0
+    while self.chronos.stillValidRestrict() and sTries < 13:
         rangeOfSequences = 100
         numberOfNurses = 2
         s, move = self.run_seqNursesFromModel(numberOfNurses = numberOfNurses, rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = False, better = True, equal = False)
         
         if s:
             self.commit_sequenceMany(move)
+            sTries += 1
+            print(move)
             print(self.penalties.total)
             #numberSuccess += 1
         
