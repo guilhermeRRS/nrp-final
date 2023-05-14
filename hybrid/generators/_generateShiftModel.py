@@ -21,6 +21,10 @@ def generateShiftModel(self):
         for j in range(len(sets.D) - 1):
             for k in range(len(sets.T)):
                 shift_model.addConstr(parameters["q"][i][j][k]*(1 - sm_x[i][j][k]) + parameters["p"][i][j][k]*sm_x[i][j][k] == v[i][j][k])
+
+                if parameters.m_max[i][k] == 0:
+                    shift_model.addConstr(sm_x[i][j][k] == 0)
+
                 for l in range(len(sets.T)):
                     if(sets.R_t[k][l]):
                         shift_model.addConstr(sm_x[i][j][k] + sm_x[i][j+1][l] <= 1)
@@ -28,6 +32,8 @@ def generateShiftModel(self):
         d = len(sets.D) - 1
         for k in range(len(sets.T)):
             shift_model.addConstr(parameters["q"][i][d][k]*(1 - sm_x[i][d][k]) + parameters["p"][i][d][k]*sm_x[i][d][k] == v[i][d][k])
+            if parameters.m_max[i][k] == 0:
+                shift_model.addConstr(sm_x[i][d][k] == 0)
                 
             shift_model.addConstr(gp.quicksum(sm_x[i][j][k] for j in range(len(sets.D))) <= parameters.m_max[i][k])
     

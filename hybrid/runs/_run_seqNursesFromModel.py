@@ -1,6 +1,6 @@
 import random
 
-def run_seqNurseFromModel(self, numberOfNurses:int, rangeOfSequences:int, worse:bool = False, better:bool = False, equal:bool = False):
+def run_seqNursesFromModel(self, numberOfNurses:int, rangeOfSequences:int, numberOfTries:int, worse:bool = False, better:bool = False, equal:bool = False):
 
     day = random.randint(0, self.nurseModel.D-1)
 
@@ -12,34 +12,42 @@ def run_seqNurseFromModel(self, numberOfNurses:int, rangeOfSequences:int, worse:
     if len(possibleNurses) < numberOfNurses:
         return False, None
     
-    nurses = random.sample(possibleNurses, k = numberOfNurses)
-    
-    earliestDay = self.nurseModel.D
-    latestDay = 0
-    moves = []
-    for nurse in nurses:
-        s, move = self.run_seqFromModel_fixed(nurse, day, rangeOfSequences)
-        if not s:
-            return False, None
-        if earliestDay > move["d"]:
-            earliestDay = move["d"]
-        if latestDay < move["d"] + len(move["s"]) - 1:
-            latestDay = move["d"] + len(move["s"]) - 1
-            
-        moves.append({"n": nurse, "length": len(move["s"]), "dayStart": move["d"], "s": move["s"]})
+    if possibleNurses == numberOfNurses:
+        numberOfTries = 1
+
+    tries = 0
+    while tries < numberOfTries and self.chronos.stillValidRestrict():
+
+        nurses = random.sample(possibleNurses, k = numberOfNurses)
         
-    oldShifts = [] #notice: this oldShift is differente: it is the inverse of the other oldshifts - first info here is day, latter the nurse (this is useful fo quicker math)
-    for d in range(earliestDay, latestDay+1):
-        oldShifts.append([])
-        for i in range(len(moves)):
-            if d >= moves[i]["dayStart"] and d < moves[i]["dayStart"] + moves[i]["length"]:
-                oldShifts[-1].append(self.helperVariables.projectedX[moves[i]["n"]][d])
-            else:
-                oldShifts[-1].append(-1)
+        moves = []
+        oldShifts = {}
+        newShifts = {}
+        for nurse in nurses:
+            s, move = self.internal_run_seqFromModel_fixed(nurse, day, rangeOfSequences)
+            if not s:
+                return False, None
+
+            dayStart = move["d"]
+            duration = len(move["s"])
+
+            for d in range(dayStart, dayStart+duration):
+                oldShift = self.helperVariables.projectedX[nurse][d]
+                newShift = move["s"][d-dayStart]
+                if not (d in oldShifts):
+                    oldShifts[d] = [oldShift]
+                    newShifts[d] = [newShift]
+                else:
+                    oldShifts[d].append(oldShift)
+                    newShifts[d].append(newShift)
                 
-    newObj = self.math_manyNurses_daySequence_withFree(oldShifts, earliestDay, moves)
-    
-    if self.evaluateFO(self.penalties.total, newObj, worse, better, equal):
-        return True, {"s": moves}
+            moves.append({"n": nurse, "length": duration, "dayStart": dayStart, "s": move["s"]})
+                    
+        newPref, newDemand = self.math_seqMany(oldShifts, newShifts, moves)
+        
+        if self.evaluateFO(self.penalties.total, newPref + newDemand, worse, better, equal):
+            return True, {"s": moves, "nP": newPref, "nD": newDemand}
+
+        tries += 1
 
     return False, None

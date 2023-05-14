@@ -64,6 +64,7 @@ class Hybrid:
     from .maths._forSingleMany import math_singleMany, math_singleMany_demand
 
     from .maths._forSeq import math_sequence
+    from .maths._forSeqMany import math_seqMany
 
     #####options
     from .getters._forSingle import getSingle
@@ -76,15 +77,18 @@ class Hybrid:
     from .runs._run_singleMany import run_singleMany, investigate_singleMany
 
     from .runs._run_seqFromModel import run_seqFromModel
-    from .runs._run_seqNursesFromModel import run_seqNurseFromModel
+    from .runs._run_seqNursesFromModel import run_seqNursesFromModel
+
+    from .runs._internal_run_seqFromModel_fixed import internal_run_seqFromModel_fixed
 
     #####commits
     from .commits._commit_single import commit_single
     from .commits._commit_singleMany import commit_singleMany
     from .commits._commit_seq import commit_sequence
+    from .commits._commit_seqMany import commit_sequenceMany
 
     #####main runner
-    from ._mainRunner import main_runSingle, main_runSingleMany, main_teste
+    from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_teste
     
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         self.nurseModel = nurseModel
