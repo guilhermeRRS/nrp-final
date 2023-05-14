@@ -1,0 +1,27 @@
+
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 22:56:28.591527 | INICIALIZATION |
+
+===== CHRONOS_MANAGER =====
+Root time:		2023-05-13 22:56:28.591527
+Time limit:		200
+Valid:		True
+TimeLeft:		199.999021
+Size:		0
+===============
+
+<<<<<<<<<<<<<<<
+
+
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 22:56:30.075676 | CHRONOS_MARK_START |
+
+===== CHRONOS_COUNTER =====
+Name:		SETTING_START
+Log:		True
+Start:		2023-05-13 22:56:30.075676
+Stop Condition:		198.515851
+Valid:		True
+TimeLeft:		198.51487
+===============
+
+<<<<<<<<<<<<<<<
+

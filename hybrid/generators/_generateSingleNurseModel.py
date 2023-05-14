@@ -42,6 +42,9 @@ def generateSingleNurseModel(self, nurse:int):
         x.append([])
         for t in range(T):
             x[-1].append(m.addVar(vtype=GRB.BINARY))
+
+            if parameters["m_max"][nurse][t] == 0:
+                m.addConstr(x[d][t] == 0)
             
     for w in range(W):
         k.append(m.addVar(vtype=GRB.BINARY))
@@ -49,9 +52,10 @@ def generateSingleNurseModel(self, nurse:int):
     for d in range(D - 1):
         m.addConstr(sum(x[d][t] for t in range(T)) <= 1)
         for t1 in range(T):
-            for t2 in range(T):
-                if(sets["R_t"][t1][t2]):
-                    m.addConstr(x[d][t1] + x[d+1][t2] <= 1)
+            if parameters["m_max"][nurse][t1] > 0:
+                for t2 in range(T):
+                    if(sets["R_t"][t1][t2]):
+                        m.addConstr(x[d][t1] + x[d+1][t2] <= 1)
                     
     for d in range(D-1,D):
         m.addConstr(sum(x[d][t] for t in range(T)) <= 1)

@@ -14,7 +14,7 @@ def commit_sequenceMany(self, moves):
         oldShifts = self.helperVariables.projectedX[nurse][dayStart:(dayStart+duration)]
         newShifts = move["s"]
 
-        for day in range(dayStart, dayStart+len(move["s"])):
+        for day in range(dayStart, dayStart+duration):
 
             dayIndex = day - dayStart
 

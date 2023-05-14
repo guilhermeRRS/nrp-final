@@ -6,8 +6,11 @@ def math_seqMany(self, oldShifts, newShifts, moves):
     for i in range(len(moves)):
         dayStart = moves[i]["dayStart"]
         duration = moves[i]["length"]
+        nurse = moves[i]["n"]
+        nurseOld = self.helperVariables.projectedX[nurse]
+        nurseNew = moves[i]["s"]
         for d in range(dayStart, dayStart+duration):
-            preferenceDelta += self.math_single_preferenceDelta(moves[i]["n"], d, oldShifts[d][i], newShifts[d][i])
+            preferenceDelta += self.math_single_preferenceDelta(moves[i]["n"], d, nurseOld[d], nurseNew[d-dayStart])
                 
     demandDelta = 0
     for d in affectedDays:

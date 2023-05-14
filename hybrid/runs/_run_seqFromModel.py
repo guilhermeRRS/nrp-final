@@ -17,19 +17,10 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
     restrictions.append(m.addConstr(sum((1 - x[d][t]) for t in range(self.nurseModel.T) for d in workingDays) + sum(x[d][t] for t in range(self.nurseModel.T) for d in freeDays) >= 1))
 
     dayStart, dayEnd = self.getRangeRewrite(nurse, day, rangeOfSequences)
-    for d in range(self.nurseModel.D):
-        if d < dayStart or d > dayEnd:
-            for t in range(self.nurseModel.T):
-                if t == self.helperVariables.projectedX[nurse][d]:
-                    x[d][t].lb = 1
-                    x[d][t].ub = 1
-                else:
-                    x[d][t].lb = 0
-                    x[d][t].ub = 0
-        else:
-            for t in range(self.nurseModel.T):
-                x[d][t].lb = 0
-                x[d][t].ub = 1
+    for d in range(dayStart, dayEnd+1):
+        for t in range(self.nurseModel.T):
+            x[d][t].lb = 0
+            x[d][t].ub = 1
 
     tries = 0
     while tries < numberOfTries and self.chronos.stillValidRestrict():

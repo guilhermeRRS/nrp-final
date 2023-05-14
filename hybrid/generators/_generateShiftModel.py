@@ -24,10 +24,10 @@ def generateShiftModel(self):
 
                 if parameters.m_max[i][k] == 0:
                     shift_model.addConstr(sm_x[i][j][k] == 0)
-
-                for l in range(len(sets.T)):
-                    if(sets.R_t[k][l]):
-                        shift_model.addConstr(sm_x[i][j][k] + sm_x[i][j+1][l] <= 1)
+                else:
+                    for l in range(len(sets.T)):
+                        if(sets.R_t[k][l]):
+                            shift_model.addConstr(sm_x[i][j][k] + sm_x[i][j+1][l] <= 1)
     
         d = len(sets.D) - 1
         for k in range(len(sets.T)):

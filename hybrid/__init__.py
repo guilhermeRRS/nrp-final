@@ -110,7 +110,7 @@ class Hybrid:
         while self.chronos.stillValidRestrict():
 
             #self.main_runSingleMany(3)
-            self.main_teste()
+            self.main_seqFromModel()
             break
 
         ########################################

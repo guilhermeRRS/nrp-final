@@ -17,12 +17,14 @@ def main_runSingle(self):
         if numberSuccess < 0.001*numberOfIters:
             break
 
-def main_runSingleMany(self, numberOfNurses:int):
+def main_runSingleMany(self):
 
-    numberOfIters = 2*numberOfNurses*self.nurseModel.I*self.nurseModel.D*self.nurseModel.T
+    numberOfNurses = 5
+    numberOfIters = 1000
     while self.chronos.stillValidRestrict():
         numberSuccess = 0
         for i in range(numberOfIters):
+            
             s, move = self.run_singleMany(numberOfNurses = numberOfNurses, worse = False, better = True, equal = False)
             
             if s:
