@@ -52,7 +52,7 @@ def main_seqFromModel(self):
 def main_seqNursesFromModel(self):
     
     sTries = 0
-    while self.chronos.stillValidRestrict() and sTries < 13:
+    while self.chronos.stillValidRestrict() and sTries < 10:
         rangeOfSequences = 100
         numberOfNurses = 2
         s, move = self.run_seqNursesFromModel(numberOfNurses = numberOfNurses, rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = False, better = True, equal = False)

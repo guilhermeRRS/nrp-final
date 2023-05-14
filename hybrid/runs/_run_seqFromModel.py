@@ -66,24 +66,26 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
                             break
                     if not (d in workingDays):
                         freeDays.append(d)
-                        restrictions.append(m.addConstr(sum((1 - x[d][t]) for t in range(self.nurseModel.T) for d in workingDays) + sum(x[d][t] for t in range(self.nurseModel.T) for d in freeDays) >= 1))
+                restrictions.append(m.addConstr(sum((1 - x[d][t]) for t in range(self.nurseModel.T) for d in workingDays) + sum(x[d][t] for t in range(self.nurseModel.T) for d in freeDays) >= 1))
 
         else:
             for restriction in restrictions:
                 m.remove(restriction)
+
             for d in range(dayStart, dayEnd+1):
                 for t in range(self.nurseModel.T):
                     x[d][t].lb = backX[d-dayStart][t]
                     x[d][t].ub = backX[d-dayStart][t]
-            print("I")
+                    
             return False, None
 
         tries += 1
+
     for restriction in restrictions:
         m.remove(restriction)
+
     for d in range(dayStart, dayEnd+1):
         for t in range(self.nurseModel.T):
             x[d][t].lb = backX[d-dayStart][t]
             x[d][t].ub = backX[d-dayStart][t]
-    print("E")
     return False, None
