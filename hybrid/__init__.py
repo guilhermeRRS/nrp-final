@@ -117,8 +117,23 @@ class Hybrid:
         
         while self.chronos.stillValidRestrict():
 
-            #self.main_runSingleMany(3)
+            print("!!!!!")
+            self.main_seqFromModel()
+
+            print("@@@@@")
+            self.solToX()
+            self.calculateHelper()
+            self.main_runSingleMany()
+
+            print("#####")
+            self.solToParallel()
             self.main_seqNursesFromModel()
+
+            print("$$$$$")
+            self.solToX()
+            self.calculateHelper()
+            self.main_runSingle()
+
             break
 
         ########################################

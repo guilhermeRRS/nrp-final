@@ -17,8 +17,6 @@ def math_single_preference(self, nurse, day, oldShift, newShift):
 def math_single_demandDelta(self, day, oldShift, newShift):
 
     if oldShift == newShift:
-        self.dayDeltaPenaltyOld = 0 
-        self.dayDeltaPenaltyNew = 0 
         return 0
 
     penaltyOld = 0
@@ -53,10 +51,6 @@ def math_single_demandDelta(self, day, oldShift, newShift):
             penaltyNew += (numberNurses[newShift] + 1 - demand[newShift])*w_max[newShift]
         if numberNurses[newShift] + 1 < demand[newShift]:
             penaltyNew += (demand[newShift] - numberNurses[newShift] - 1)*w_min[newShift]
-
-    #only useful if commit happens right after the math
-    self.dayDeltaPenaltyOld = penaltyOld 
-    self.dayDeltaPenaltyNew = penaltyNew 
 
     return penaltyOld + penaltyNew
 

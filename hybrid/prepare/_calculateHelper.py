@@ -1,5 +1,10 @@
 def calculateHelper(self):
 
+    for d in range(self.nurseModel.D):
+        for t in range(self.nurseModel.T):
+            self.penalties.numberNurses[d][t] = 0
+
+    self.penalties.preference_total = 0
     for i in range(self.nurseModel.I):
         self.helperVariables.workloadCounter[i] = 0
         self.helperVariables.workingDays[i] = []
@@ -19,7 +24,6 @@ def calculateHelper(self):
                     self.helperVariables.workingDays[i].append(d)
                     self.penalties.numberNurses[d][t] += 1
     
-    '''
     self.penalties.demand = 0
 
     #equivalence = []
@@ -37,4 +41,3 @@ def calculateHelper(self):
                 self.penalties.demand += addingPenalty
             
     self.penalties.total = self.penalties.demand + self.penalties.preference_total
-    '''
