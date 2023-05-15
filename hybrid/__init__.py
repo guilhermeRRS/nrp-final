@@ -118,10 +118,7 @@ class Hybrid:
         while self.chronos.stillValidRestrict():
 
             #self.main_runSingleMany(3)
-            self.main_runSingle()
-            self.main_runSingleMany()
-            self.main_runSingle()
-            self.main_runSingleMany()
+            self.main_seqNursesFromModel()
             break
 
         ########################################

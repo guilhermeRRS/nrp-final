@@ -13,11 +13,8 @@ def internal_run_seqFromModel_fixed(self, nurse:int, day:int, rangeOfSequences:i
     restrictions.append(m.addConstr(sum((1 - x[d][t]) for t in range(self.nurseModel.T) for d in workingDays) + sum(x[d][t] for t in range(self.nurseModel.T) for d in freeDays) >= 1))
 
     dayStart, dayEnd = self.getRangeRewrite(nurse, day, rangeOfSequences)
-    backX = []
     for d in range(dayStart, dayEnd+1):
-        backX.append([])
         for t in range(self.nurseModel.T):
-            backX[-1].append(x[d][t].lb)
             x[d][t].lb = 0
             x[d][t].ub = 1
 
@@ -38,8 +35,8 @@ def internal_run_seqFromModel_fixed(self, nurse:int, day:int, rangeOfSequences:i
             for d in range(dayStart, dayEnd+1):
                 newX.append(-1)
                 for t in range(self.nurseModel.T):
-                    x[d][t].lb = backX[d-dayStart][t]
-                    x[d][t].ub = backX[d-dayStart][t]
+                    x[d][t].lb = self.currentSol.solution[nurse][d][t]
+                    x[d][t].ub = self.currentSol.solution[nurse][d][t]
                     if x[d][t].x >= 0.5:
                         newX[-1] = t
                         break
@@ -52,14 +49,14 @@ def internal_run_seqFromModel_fixed(self, nurse:int, day:int, rangeOfSequences:i
                 m.remove(restriction) 
             for d in range(dayStart, dayEnd+1):
                 for t in range(self.nurseModel.T):
-                    x[d][t].lb = backX[d-dayStart][t]
-                    x[d][t].ub = backX[d-dayStart][t]
+                    x[d][t].lb = self.currentSol.solution[nurse][d][t]
+                    x[d][t].ub = self.currentSol.solution[nurse][d][t]
             return False, None
         
     for restriction in restrictions:
         m.remove(restriction)  
     for d in range(dayStart, dayEnd+1):
         for t in range(self.nurseModel.T):
-            x[d][t].lb = backX[d-dayStart][t]
-            x[d][t].ub = backX[d-dayStart][t]
+            x[d][t].lb = self.currentSol.solution[nurse][d][t]
+            x[d][t].ub = self.currentSol.solution[nurse][d][t]
     return False, None

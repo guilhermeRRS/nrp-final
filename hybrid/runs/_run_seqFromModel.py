@@ -18,13 +18,10 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
 
     dayStart, dayEnd = self.getRangeRewrite(nurse, day, rangeOfSequences)
     
-    backX = []
     freededDays = []
     for d in range(dayStart, dayEnd+1):
         freededDays.append(d)
-        backX.append([])
         for t in range(self.nurseModel.T):
-            backX[-1].append(x[d][t].lb)
             x[d][t].lb = 0
             x[d][t].ub = 1
 
@@ -46,8 +43,8 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
             for d in range(dayStart, dayEnd+1):
                 newX.append(-1)
                 for t in range(self.nurseModel.T):
-                    x[d][t].lb = backX[d-dayStart][t]
-                    x[d][t].ub = backX[d-dayStart][t]
+                    x[d][t].lb = self.currentSol.solution[nurse][d][t]
+                    x[d][t].ub = self.currentSol.solution[nurse][d][t]
                     if x[d][t].x >= 0.5:
                         newX[-1] = t
                         break
@@ -58,7 +55,6 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
                     m.remove(restriction)
                 return True, {"n": nurse, "d": dayStart, "s": newX, "nP": newPref, "nD": newDemand}
             else:
-                print(self.penalties.total, newPref + newDemand)
                 #here the restriction may be softer, it means, the day squence may be equal, but shifts must change
                 workingDays = []
                 freeDays = []
@@ -74,11 +70,11 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
         else:
             for restriction in restrictions:
                 m.remove(restriction)
-
+                
             for d in range(dayStart, dayEnd+1):
                 for t in range(self.nurseModel.T):
-                    x[d][t].lb = backX[d-dayStart][t]
-                    x[d][t].ub = backX[d-dayStart][t]
+                    x[d][t].lb = self.currentSol.solution[nurse][d][t]
+                    x[d][t].ub = self.currentSol.solution[nurse][d][t]
                     
             return False, None
 
@@ -86,9 +82,9 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
 
     for restriction in restrictions:
         m.remove(restriction)
-
+        
     for d in range(dayStart, dayEnd+1):
         for t in range(self.nurseModel.T):
-            x[d][t].lb = backX[d-dayStart][t]
-            x[d][t].ub = backX[d-dayStart][t]
+            x[d][t].lb = self.currentSol.solution[nurse][d][t]
+            x[d][t].ub = self.currentSol.solution[nurse][d][t]
     return False, None

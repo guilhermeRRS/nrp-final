@@ -26,9 +26,7 @@ def commit_sequenceMany(self, moves):
                 
                 self.parallelModels[nurse]["x"][day][oldShift].lb = 0
                 self.parallelModels[nurse]["x"][day][oldShift].ub = 0
-        
-                self.helperVariables.shiftTypeCounter[nurse][oldShift] -= 1
-                self.helperVariables.workloadCounter[nurse] -= self.nurseModel.data.parameters.l_t[oldShift]
+                self.currentSol.solution[nurse][day][oldShift] = 0
         
                 self.penalties.numberNurses[day][oldShift] -= 1
 
@@ -38,12 +36,10 @@ def commit_sequenceMany(self, moves):
                 
                 self.parallelModels[nurse]["x"][day][newShift].lb = 1
                 self.parallelModels[nurse]["x"][day][newShift].ub = 1
-                
-                self.helperVariables.shiftTypeCounter[nurse][newShift] += 1
-                self.helperVariables.workloadCounter[nurse] += self.nurseModel.data.parameters.l_t[newShift]
-                
-                self.helperVariables.workingDays[nurse].append(day)
+                self.currentSol.solution[nurse][day][newShift] = 1
                 
                 self.penalties.numberNurses[day][newShift] += 1
+                
+                self.helperVariables.workingDays[nurse].append(day)
         
     self.parallelModels[nurse]["m"].update()

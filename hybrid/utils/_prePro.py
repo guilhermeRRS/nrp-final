@@ -40,6 +40,8 @@ def preProcessFromSolution(self):
     
                 self.nurseModel.model.x[i][d][t].ub = self.nurseModel.solution.solution[i][d][t]
                 self.nurseModel.model.x[i][d][t].lb = self.nurseModel.solution.solution[i][d][t]
+                self.parallelModels[i]["x"][d][t].lb = self.nurseModel.solution.solution[i][d][t]
+                self.parallelModels[i]["x"][d][t].ub = self.nurseModel.solution.solution[i][d][t]
                  
                 if self.nurseModel.solution.solution[i][d][t] >= 0.5:
                     self.helperVariables.shiftTypeCounter[-1][t] += 1

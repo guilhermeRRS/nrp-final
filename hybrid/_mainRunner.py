@@ -7,6 +7,7 @@ def main_runSingle(self):
             s, move = self.run_single(worse = False, better = True, equal = False)
             
             if s:
+                print(move["nD"]+move["nP"])
                 self.commit_single(move)
                 numberSuccess += 1
                 
@@ -28,6 +29,7 @@ def main_runSingleMany(self):
             s, move = self.run_singleMany(numberOfNurses = numberOfNurses, worse = False, better = True, equal = False)
             
             if s:
+                print(move["nD"]+move["nP"])
                 self.commit_singleMany(move)
                 numberSuccess += 1
                 
@@ -45,11 +47,10 @@ def main_seqFromModel(self):
         rangeOfSequences = 2
         s, move = self.run_seqFromModel(rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = False, better = True, equal = False)
         if s:
+            print(move["nD"]+move["nP"])
             sTries += 1
             self.commit_sequence(move)
             #numberSuccess += 1
-
-    self.make_parallel_to_x()
 
 def main_seqNursesFromModel(self):
     
@@ -60,8 +61,8 @@ def main_seqNursesFromModel(self):
         s, move = self.run_seqNursesFromModel(numberOfNurses = numberOfNurses, rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = False, better = True, equal = False)
         
         if s:
+            print(move["nD"]+move["nP"])
             self.commit_sequenceMany(move)
             sTries += 1
 
-    self.make_parallel_to_x()
         

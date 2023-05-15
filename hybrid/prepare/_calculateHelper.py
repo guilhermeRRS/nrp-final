@@ -12,9 +12,6 @@ def calculateHelper(self):
             for t in range(self.nurseModel.T):
                 self.penalties.preference_total += self.nurseModel.data.parameters.p[i][d][t]*self.nurseModel.solution.solution[i][d][t]+self.nurseModel.data.parameters.q[i][d][t]*(1 - self.nurseModel.solution.solution[i][d][t])
     
-                self.nurseModel.model.x[i][d][t].ub = self.nurseModel.solution.solution[i][d][t]
-                self.nurseModel.model.x[i][d][t].lb = self.nurseModel.solution.solution[i][d][t]
-                 
                 if self.nurseModel.solution.solution[i][d][t] >= 0.5:
                     self.helperVariables.shiftTypeCounter[i][t] += 1
                     self.helperVariables.workloadCounter[i] += self.nurseModel.data.parameters.l_t[t]
@@ -22,6 +19,7 @@ def calculateHelper(self):
                     self.helperVariables.workingDays[i].append(d)
                     self.penalties.numberNurses[d][t] += 1
     
+    '''
     self.penalties.demand = 0
 
     #equivalence = []
@@ -39,3 +37,4 @@ def calculateHelper(self):
                 self.penalties.demand += addingPenalty
             
     self.penalties.total = self.penalties.demand + self.penalties.preference_total
+    '''
