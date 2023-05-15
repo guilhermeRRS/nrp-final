@@ -47,14 +47,17 @@ class Hybrid:
     nurseModel: NurseModel
     chronos: Chronos
     helperVariables: HelperVariables
+    currentSol: Solution
 
     #####utils
-    from .utils._prePro import preProcessFromSolution, preProcess, getPreProcessData
+    from .utils._prePro import preProcessFromSolution
     from .utils._forShifts import computeLt, computeWorkloadNewSeq, shiftFreeMark, shiftFreeUnMark
     from .utils._forShifts import getSequenceWorkMarks, getRangeRewrite
 
     #####prepare
-    from .prepare._setSolToParallel import make_parallel_to_x
+    from .prepare._calculateHelper import calculateHelper
+    from .prepare._setSolToX import solToX
+    from .prepare._setSolToParallel import solToParallel
     
     #####generators
     from .generators._generateSingleNurseModel import generateSingleNurseModel
@@ -92,8 +95,9 @@ class Hybrid:
 
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
-    
+
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
+        
         self.nurseModel = nurseModel
         self.instance = instance
         self.chronos = chronos
@@ -107,13 +111,17 @@ class Hybrid:
         self.startObj = startObj
         self.currentObj = startObj
         self.chronos.startCounter("SETTING_START")
-        self.getPreProcessData()
+        self.preProcessFromSolution()
         self.chronos.stopCounter()
         print("Start working")
+        
         while self.chronos.stillValidRestrict():
 
             #self.main_runSingleMany(3)
-            self.main_seqFromModel()
+            self.main_runSingle()
+            self.main_runSingleMany()
+            self.main_runSingle()
+            self.main_runSingleMany()
             break
 
         ########################################
@@ -123,6 +131,7 @@ class Hybrid:
 
         ########################################
         print("-->",self.startObj, self.penalties.total, self.penalties.preference_total, self.penalties.demand)
+        self.solToX()
         self.nurseModel.model.m.update()
         m.setParam("TimeLimit", 43200)
         

@@ -26,11 +26,11 @@ def computeWorkloadSeq(self, nurse, dayStart, dayEnd):
 def shiftFreeMark(self, shift):
     if shift == -1:
         return "free"
-    return str(shift)
+    return shift
 def shiftFreeUnMark(self, shift):
     if shift == "free":
         return -1
-    return str(shift)
+    return shift
 
 def getSequenceWorkMarks(self, nurse, day):
     dayStart = day

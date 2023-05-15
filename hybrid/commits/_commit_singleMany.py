@@ -15,11 +15,9 @@ def commit_singleMany(self, move):
         oldShift = self.helperVariables.projectedX[nurse][day]
         newShift = newShifts[i]
 
-        self.nurseModel.model.x[nurse][day][oldShift].lb = 0
-        self.nurseModel.model.x[nurse][day][oldShift].ub = 0
+        self.currentSol.solution[nurse][day][oldShift] = 0
         
-        self.nurseModel.model.x[nurse][day][newShift].lb = 1
-        self.nurseModel.model.x[nurse][day][newShift].ub = 1
+        self.currentSol.solution[nurse][day][newShift] = 1
 
         self.helperVariables.projectedX[nurse][day] = newShift
 

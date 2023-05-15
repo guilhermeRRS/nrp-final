@@ -1,4 +1,5 @@
 import json
+from model import Solution
 
 def preProcessFromSolution(self):
     
@@ -16,6 +17,8 @@ def preProcessFromSolution(self):
             self.penalties.numberNurses[-1].append(0)
     
     #print("Calculating")
+    self.parallelModels = []
+    self.currentSol = Solution().loadSolution(self.nurseModel.solution.solution)
     for i in range(self.nurseModel.I):
         self.helperVariables.shiftTypeCounter.append([])
         self.helperVariables.workloadCounter.append(0)
@@ -37,7 +40,7 @@ def preProcessFromSolution(self):
     
                 self.nurseModel.model.x[i][d][t].ub = self.nurseModel.solution.solution[i][d][t]
                 self.nurseModel.model.x[i][d][t].lb = self.nurseModel.solution.solution[i][d][t]
-
+                 
                 if self.nurseModel.solution.solution[i][d][t] >= 0.5:
                     self.helperVariables.shiftTypeCounter[-1][t] += 1
                     self.helperVariables.workloadCounter[-1] += self.nurseModel.data.parameters.l_t[t]
@@ -100,6 +103,17 @@ def preProcessFromSolution(self):
             self.helperVariables.oneInnerJourney_rt["free"][tEnd].append({"s": freeFirst, "w": self.computeLt(freeFirst)})
             self.helperVariables.oneInnerJourney_rt[tStart]["free"].append({"s": freeAfter, "w": self.computeLt(freeAfter)})
 
+    #print("The monster for sized 3")
+    for sequence1 in sizedTwo:
+        tEndingFirst = sequence1[-1]
+        for sequence2 in sizedTwoStarting[tEndingFirst]:
+            newSequence = [sequence1[0], sequence1[1], sequence2[1]]
+            
+            ##Setting the global vars
+            innerSeq = [sequence1[1]]
+            self.helperVariables.oneInnerJourney_rt[sequence1[0]][sequence2[-1]].append({"s": innerSeq, "w": self.computeLt(innerSeq)})
+    
+
 '''
 def preProcess(self):
     self.preProcessFromSolution()
@@ -148,7 +162,5 @@ def getPreProcessData(self):
     
     self.highest_cmax = problemJourneyData["highest_cmax"]
     self.helperVariables.oneInnerJourney_rt = problemJourneyData["oneInnerJourney_rt"]
-
-    self.parallelModels = []
 
 '''
