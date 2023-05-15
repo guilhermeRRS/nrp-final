@@ -1,7 +1,7 @@
 import json
 
 def preProcessFromSolution(self):
-    #print("Generating")
+    
     self.helperVariables.shiftTypeCounter = []
     self.helperVariables.workloadCounter = []
     self.helperVariables.projectedX = []
@@ -22,6 +22,11 @@ def preProcessFromSolution(self):
         self.helperVariables.projectedX.append([])
         self.helperVariables.workingDays.append([])
         
+        m, x = self.generateSingleNurseModel(i)
+        m.setParam("Solutionlimit", 1)
+        m.setParam("OutputFlag", 0)
+        self.parallelModels.append({"m": m, "x": x})
+        
         for t in range(self.nurseModel.T):
             self.helperVariables.shiftTypeCounter[-1].append(0)
         
@@ -29,7 +34,10 @@ def preProcessFromSolution(self):
             self.helperVariables.projectedX[-1].append(-1)
             for t in range(self.nurseModel.T):
                 self.penalties.preference_total += self.nurseModel.data.parameters.p[i][d][t]*self.nurseModel.solution.solution[i][d][t]+self.nurseModel.data.parameters.q[i][d][t]*(1 - self.nurseModel.solution.solution[i][d][t])
-            
+    
+                self.nurseModel.model.x[i][d][t].ub = self.nurseModel.solution.solution[i][d][t]
+                self.nurseModel.model.x[i][d][t].lb = self.nurseModel.solution.solution[i][d][t]
+
                 if self.nurseModel.solution.solution[i][d][t] >= 0.5:
                     self.helperVariables.shiftTypeCounter[-1][t] += 1
                     self.helperVariables.workloadCounter[-1] += self.nurseModel.data.parameters.l_t[t]
@@ -92,6 +100,7 @@ def preProcessFromSolution(self):
             self.helperVariables.oneInnerJourney_rt["free"][tEnd].append({"s": freeFirst, "w": self.computeLt(freeFirst)})
             self.helperVariables.oneInnerJourney_rt[tStart]["free"].append({"s": freeAfter, "w": self.computeLt(freeAfter)})
 
+'''
 def preProcess(self):
     self.preProcessFromSolution()
     self.solutionData = {
@@ -142,12 +151,4 @@ def getPreProcessData(self):
 
     self.parallelModels = []
 
-    for i in range(self.nurseModel.I):
-        m, x = self.generateSingleNurseModel(i)
-        m.setParam("Solutionlimit", 1)
-        m.setParam("OutputFlag", 0)
-        self.parallelModels.append({"m": m, "x": x})
-        for d in range(self.nurseModel.D):
-            for t in range(self.nurseModel.T):
-                self.nurseModel.model.x[i][d][t].ub = self.nurseModel.solution.solution[i][d][t]
-                self.nurseModel.model.x[i][d][t].lb = self.nurseModel.solution.solution[i][d][t]
+'''

@@ -12,6 +12,9 @@ def get_extremeShifts(self, nurse):
 def computeLt(self, sequence):
     return sum([self.nurseModel.data.parameters.l_t[sequence[i]] for i in range(len(sequence))])
 
+def computeWorkloadNewSeq(self, sequence):
+    return sum([(0 if sequence[i] < 0 else self.nurseModel.data.parameters.l_t[sequence[i]]) for i in range(len(sequence))])
+
 def computeWorkloadSeq(self, nurse, dayStart, dayEnd):
     soma = 0
     for day in range(dayStart, dayEnd+1):

@@ -1,120 +1,26 @@
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-14 04:16:18.121944 | INICIALIZATION |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 02:32:19.153605 | INICIALIZATION |
 
 ===== CHRONOS_MANAGER =====
-Root time:		2023-05-14 04:16:18.121944
-Time limit:		200
+Root time:		2023-05-15 02:32:19.153605
+Time limit:		300
 Valid:		True
-TimeLeft:		200.0
+TimeLeft:		300.0
 Size:		0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-14 04:16:45.077512 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 02:32:46.738953 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
 Name:		SETTING_START
 Log:		True
-Start:		2023-05-14 04:16:45.077512
-Stop Condition:		173.044432
+Start:		2023-05-15 02:32:46.738953
+Stop Condition:		272.414652
 Valid:		True
-TimeLeft:		173.044432
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-14 04:18:14.330428 | CHRONOS_MARK_STOP |
-
-===== CHRONOS_COUNTER =====
-Name:		SETTING_START
-Log:		True
-Start:		2023-05-14 04:16:45.077512
-Stop Condition:		173.044432
-Valid:		True
-TimeLeft:		83.791516
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-14 04:18:14.423372 | CHRONOS_MARK_START |
-
-===== CHRONOS_COUNTER =====
-Name:		Internal optinization
-Log:		True
-Start:		2023-05-14 04:18:14.423372
-Stop Condition:		83.698572
-Valid:		True
-TimeLeft:		83.698572
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-14 04:18:14.863122 | CHRONOS_MARK_STOP |
-
-===== CHRONOS_COUNTER =====
-Name:		Internal optinization
-Log:		True
-Start:		2023-05-14 04:18:14.423372
-Stop Condition:		83.698572
-Valid:		True
-TimeLeft:		83.258822
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | SEQ_FROM_MODEL | 2023-05-14 04:18:14.863122 | SOLVER_GUROBI_OUTPUT |
-
-===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		2
-SolCount:		1
-Valid:		True
-Obj:		0.0
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-14 04:18:14.999043 | CHRONOS_MARK_START |
-
-===== CHRONOS_COUNTER =====
-Name:		Internal optinization
-Log:		True
-Start:		2023-05-14 04:18:14.999043
-Stop Condition:		83.122901
-Valid:		True
-TimeLeft:		83.122901
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-14 04:18:15.379827 | CHRONOS_MARK_STOP |
-
-===== CHRONOS_COUNTER =====
-Name:		Internal optinization
-Log:		True
-Start:		2023-05-14 04:18:14.999043
-Stop Condition:		83.122901
-Valid:		True
-TimeLeft:		82.742117
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | SEQ_FROM_MODEL | 2023-05-14 04:18:15.379827 | SOLVER_GUROBI_OUTPUT |
-
-===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		2
-SolCount:		1
-Valid:		True
-Obj:		0.0
+TimeLeft:		272.414652
 ===============
 
 <<<<<<<<<<<<<<<

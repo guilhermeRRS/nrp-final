@@ -32,10 +32,13 @@ class Solution:
                 line = ""
                 for d in range(D):
                     shift = ""
+                    gotAShift = 0
                     for t in range(T):
                         if x[i][d][t] >= 0.5:
                             shift = sets.T[t]
-                            break
+                            gotAShift += 1
+                    if gotAShift > 1:
+                        raise Exception("There is more")
                     line = line+shift+"\t"
                 output = output+line+"\n"
 				

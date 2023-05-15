@@ -17,8 +17,11 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
     restrictions.append(m.addConstr(sum((1 - x[d][t]) for t in range(self.nurseModel.T) for d in workingDays) + sum(x[d][t] for t in range(self.nurseModel.T) for d in freeDays) >= 1))
 
     dayStart, dayEnd = self.getRangeRewrite(nurse, day, rangeOfSequences)
+    
     backX = []
+    freededDays = []
     for d in range(dayStart, dayEnd+1):
+        freededDays.append(d)
         backX.append([])
         for t in range(self.nurseModel.T):
             backX[-1].append(x[d][t].lb)

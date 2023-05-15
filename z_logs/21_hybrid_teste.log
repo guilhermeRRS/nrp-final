@@ -1,102 +1,102 @@
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 23:02:14.944971 | INICIALIZATION |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:12:52.932618 | INICIALIZATION |
 
 ===== CHRONOS_MANAGER =====
-Root time:		2023-05-13 23:02:14.944971
-Time limit:		200
+Root time:		2023-05-15 00:12:52.932618
+Time limit:		300
 Valid:		True
-TimeLeft:		200.0
+TimeLeft:		300.0
 Size:		0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 23:02:19.599324 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:12:57.665912 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
 Name:		SETTING_START
 Log:		True
-Start:		2023-05-13 23:02:19.599324
-Stop Condition:		195.34564699999999
+Start:		2023-05-15 00:12:57.665912
+Stop Condition:		295.266706
 Valid:		True
-TimeLeft:		195.34564699999999
+TimeLeft:		295.266706
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 23:02:34.768001 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:13:15.081062 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
 Name:		SETTING_START
 Log:		True
-Start:		2023-05-13 23:02:19.599324
-Stop Condition:		195.34564699999999
+Start:		2023-05-15 00:12:57.665912
+Stop Condition:		295.266706
 Valid:		True
-TimeLeft:		180.17696999999998
+TimeLeft:		277.851556
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 23:02:53.035396 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:13:25.991882 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
 Name:		START_OPTIMIZE_LAST
 Log:		True
-Start:		2023-05-13 23:02:53.035396
-Stop Condition:		161.909575
+Start:		2023-05-15 00:13:25.991882
+Stop Condition:		266.940736
 Valid:		True
-TimeLeft:		161.908572
+TimeLeft:		266.940736
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 23:02:53.864927 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:13:26.917757 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
 Name:		START_OPTIMIZE_LAST
 Log:		True
-Start:		2023-05-13 23:02:53.035396
-Stop Condition:		161.909575
+Start:		2023-05-15 00:13:25.991882
+Stop Condition:		266.940736
 Valid:		True
-TimeLeft:		161.080044
+TimeLeft:		266.014861
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-13 23:02:53.865925 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-15 00:13:26.918756 | SOLVER_GUROBI_OUTPUT |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
 Status:		2
 SolCount:		1
 Valid:		True
-Obj:		396506.0
+Obj:		397118.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | ORIGIN_MAIN | 2023-05-13 23:02:55.290109 | 
+>>>>> INFO | ORIGIN_MAIN | 2023-05-15 00:13:28.383916 | 
 SUCCESS_SOLVED
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | ORIGIN_MAIN | 2023-05-13 23:02:55.318093 | 
+>>>>> INFO | ORIGIN_MAIN | 2023-05-15 00:13:28.405903 | 
 SOLUTION_PRINTING_SUCCESS
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-13 23:02:55.318093 | FINISHED |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:13:28.405903 | FINISHED |
 
 ===== CHRONOS_MANAGER =====
-Root time:		2023-05-13 23:02:14.944971
-Time limit:		200
+Root time:		2023-05-15 00:12:52.932618
+Time limit:		300
 Valid:		True
-TimeLeft:		159.626878
+TimeLeft:		264.526715
 Size:		0
 ===============
 

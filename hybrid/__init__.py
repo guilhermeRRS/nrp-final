@@ -50,8 +50,11 @@ class Hybrid:
 
     #####utils
     from .utils._prePro import preProcessFromSolution, preProcess, getPreProcessData
-    from .utils._forShifts import computeLt, shiftFreeMark, shiftFreeUnMark
+    from .utils._forShifts import computeLt, computeWorkloadNewSeq, shiftFreeMark, shiftFreeUnMark
     from .utils._forShifts import getSequenceWorkMarks, getRangeRewrite
+
+    #####prepare
+    from .prepare._setSolToParallel import make_parallel_to_x
     
     #####generators
     from .generators._generateSingleNurseModel import generateSingleNurseModel
@@ -110,7 +113,7 @@ class Hybrid:
         while self.chronos.stillValidRestrict():
 
             #self.main_runSingleMany(3)
-            self.main_seqNursesFromModel()
+            self.main_seqFromModel()
             break
 
         ########################################
@@ -120,6 +123,7 @@ class Hybrid:
 
         ########################################
         print("-->",self.startObj, self.penalties.total, self.penalties.preference_total, self.penalties.demand)
+        self.nurseModel.model.m.update()
         m.setParam("TimeLimit", 43200)
         
         self.chronos.startCounter("START_OPTIMIZE_LAST")
@@ -133,14 +137,14 @@ class Hybrid:
         if gurobiReturn.valid():
 
             self.nurseModel.solution = Solution().getFromX(self.nurseModel.model.x)
-            self.nurseModel.solution = Solution().getFromLb(self.nurseModel.model.x)
-            self.nurseModel.solution.printSolution("failed.sol", self.nurseModel.data.sets)
+            #self.nurseModel.solution = Solution().getFromLb(self.nurseModel.model.x)
+            #self.nurseModel.solution.printSolution("failed.sol", self.nurseModel.data.sets)
             self.nurseModel.s_solution = True
             return True, self.nurseModel
         
         else:
-            self.nurseModel.solution = Solution().getFromLb(self.nurseModel.model.x)
-            self.nurseModel.solution.printSolution("failed.sol", self.nurseModel.data.sets)
+            #self.nurseModel.solution = Solution().getFromLb(self.nurseModel.model.x)
+            #self.nurseModel.solution.printSolution("failed.sol", self.nurseModel.data.sets)
             self.chronos.printMessage(ORIGIN_SOLVER, SOLVER_ITERATION_NO_SOLUTION, False)
             
         self.chronos.printMessage(ORIGIN_SOLVER, "NOT_ABLE_TO_SAVE", True)

@@ -40,14 +40,16 @@ def main_runSingleMany(self):
 
 def main_seqFromModel(self):
     
+    sTries = 0
     while self.chronos.stillValidRestrict():
-        rangeOfSequences = 100
+        rangeOfSequences = 2
         s, move = self.run_seqFromModel(rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = False, better = True, equal = False)
-        
         if s:
+            sTries += 1
             self.commit_sequence(move)
-            print(self.penalties.total)
             #numberSuccess += 1
+
+    self.make_parallel_to_x()
 
 def main_seqNursesFromModel(self):
     
@@ -60,7 +62,6 @@ def main_seqNursesFromModel(self):
         if s:
             self.commit_sequenceMany(move)
             sTries += 1
-            print(move)
-            print(self.penalties.total)
-            #numberSuccess += 1
+
+    self.make_parallel_to_x()
         
