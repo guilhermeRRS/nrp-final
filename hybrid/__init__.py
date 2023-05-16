@@ -98,7 +98,7 @@ class Hybrid:
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
 
-    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorter, manager_seqHuge
+    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorter, manager_seqHugeWorser
 
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         
@@ -124,11 +124,11 @@ class Hybrid:
         fbeta = 0.5
         numberOfIters = 5000
         addNumberOfIters = 250
-        while self.chronos.stillValidRestrict():
+        while self.chronos.stillValidMIP():
 
             self.manager_singleSearch(numberOfIters)
-            #self.manager_seqShorter()
-            self.manager_seqHuge(beta)
+            self.manager_seqShorter()
+            self.manager_seqHugeWorser(beta)
             beta *= fbeta
             numberOfIters += addNumberOfIters
 
@@ -140,7 +140,7 @@ class Hybrid:
         ########################################
         print("-->",self.startObj, self.penalties.total, self.penalties.preference_total, self.penalties.demand)
         self.bestSolToX()
-        m.setParam("TimeLimit", 43200)
+        m.setParam("TimeLimit", self.chronos.timeLeft())
         
         m.update()
         self.chronos.startCounter("START_OPTIMIZE_LAST")

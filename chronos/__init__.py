@@ -88,6 +88,8 @@ class Chronos:
     
     def stillValidRestrict(self):
         return (datetime.datetime.now() - self.rootTime).total_seconds() + 1 < self.timeLimit
+    def stillValidMIP(self):
+        return (datetime.datetime.now() - self.rootTime).total_seconds() < self.timeLimit*0.8
     
     def timeLeft(self):
         return self.timeLimit - (datetime.datetime.now() - self.rootTime).total_seconds()

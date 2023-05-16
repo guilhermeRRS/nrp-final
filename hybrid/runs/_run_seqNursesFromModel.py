@@ -16,7 +16,7 @@ def run_seqNursesFromModel(self, numberOfNurses:int, rangeOfSequences:int, numbe
         numberOfTries = 1
 
     tries = 0
-    while tries < numberOfTries and self.chronos.stillValidRestrict():
+    while tries < numberOfTries and self.chronos.stillValidMIP():
 
         nurses = random.sample(possibleNurses, k = numberOfNurses)
         

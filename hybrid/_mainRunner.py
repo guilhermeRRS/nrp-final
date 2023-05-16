@@ -1,7 +1,7 @@
 def main_runSingle(self):
     
     numberOfIters = 2*self.nurseModel.I*self.nurseModel.D*self.nurseModel.T
-    while self.chronos.stillValidRestrict():
+    while self.chronos.stillValidMIP():
         numberSuccess = 0
         for i in range(numberOfIters):
             s, move = self.run_single(worse = True, better = True, equal = True)
@@ -10,11 +10,11 @@ def main_runSingle(self):
                 self.commit_single(move)
                 numberSuccess += 1
                 
-            if not self.chronos.stillValidRestrict():
+            if not self.chronos.stillValidMIP():
                 break
 
         print(numberSuccess)
-        break
+        
         if numberSuccess < 0.001*numberOfIters:
             break
 
@@ -22,7 +22,7 @@ def main_runSingleMany(self):
 
     numberOfNurses = 2
     numberOfIters = 10000
-    while self.chronos.stillValidRestrict():
+    while self.chronos.stillValidMIP():
         numberSuccess = 0
         for i in range(numberOfIters):
             
@@ -32,18 +32,18 @@ def main_runSingleMany(self):
                 self.commit_singleMany(move)
                 numberSuccess += 1
                 
-            if not self.chronos.stillValidRestrict():
+            if not self.chronos.stillValidMIP():
                 break
 
         print(numberSuccess)
-        break
+        
         if numberSuccess < 0.001*numberOfIters:
             break
 
 def main_seqFromModel(self):
     
     sTries = 0
-    while self.chronos.stillValidRestrict() and sTries < 10:
+    while self.chronos.stillValidMIP() and sTries < 10:
         rangeOfSequences = 2
         s, move = self.run_seqFromModel(rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = False, better = True, equal = False)
         if s:
@@ -56,7 +56,7 @@ def main_seqFromModel(self):
 def main_seqNursesFromModel(self):
     
     sTries = 0
-    while self.chronos.stillValidRestrict() and sTries < 100:
+    while self.chronos.stillValidMIP() and sTries < 100:
         rangeOfSequences = 10
         numberOfNurses = 3
         s, move = self.run_seqNursesFromModel(numberOfNurses = numberOfNurses, rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = True, better = True, equal = True)

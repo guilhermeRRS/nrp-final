@@ -15,7 +15,7 @@ def manager_singleDeep(self):
 
     numberOfIters = 10000
     keepsDiving = True
-    while self.chronos.stillValidRestrict() and keepsDiving:
+    while self.chronos.stillValidMIP() and keepsDiving:
         numberSuccess = 0
         for i in range(numberOfIters):
             s, move = self.run_single(worse = False, better = True, equal = False)
@@ -31,7 +31,7 @@ def manager_singleDeep(self):
                                 self.tmpBestSol.solution[i][d][t] = self.currentSol.solution[i][d][t]
                 numberSuccess += 1
                 
-            if not self.chronos.stillValidRestrict():
+            if not self.chronos.stillValidMIP():
                 keepsDiving = False
                 break
 
@@ -48,7 +48,7 @@ def manager_singleSearch(self, numberOfIters):
     
     keepsDiving = True
     totalNumberOfSucces = 0
-    while self.chronos.stillValidRestrict() and keepsDiving:
+    while self.chronos.stillValidMIP() and keepsDiving:
         totalNumberOfSucces = 0
         for numberNurses in optionsNumberNurses:
             numberSuccess = 0
@@ -70,11 +70,11 @@ def manager_singleSearch(self, numberOfIters):
                                 for t in range(self.nurseModel.T):
                                     self.tmpBestSol.solution[i][d][t] = self.currentSol.solution[i][d][t]
                                     
-                if not self.chronos.stillValidRestrict():
+                if not self.chronos.stillValidMIP():
                     break
             print("1S", numberNurses, numberSuccess)
             totalNumberOfSucces += numberSuccess
-            if not self.chronos.stillValidRestrict():
+            if not self.chronos.stillValidMIP():
                 break
         
         print("1S.", totalNumberOfSucces)
@@ -82,20 +82,20 @@ def manager_singleSearch(self, numberOfIters):
             keepsDiving = False
             break
 
-def manager_seqShorter(self):
+def manager_seqShorterWorser(self):
     self.startSeqs()
 
     numberOfIters = 100
-    optionsNumberNurses = [4]
+    optionsNumberNurses = [2]
 
     numberNurses = list(dict.fromkeys(optionsNumberNurses))
-    rangeOfSequencesOptions = [3]
+    rangeOfSequencesOptions = [1]
     
     for rangeOfSequences in rangeOfSequencesOptions:
         for numberNurses in optionsNumberNurses:
             numberSuccess = 0
             for i in range(numberOfIters):
-                s, move = self.run_seqNursesFromModel(numberOfNurses = numberNurses, rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = False, better = True, equal = False)
+                s, move = self.run_seqNursesFromModel(numberOfNurses = numberNurses, rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = True, better = True, equal = True)
         
                 if s:
                     numberSuccess += 1
@@ -108,23 +108,17 @@ def manager_seqShorter(self):
                                 for t in range(self.nurseModel.T):
                                     self.tmpBestSol.solution[i][d][t] = self.currentSol.solution[i][d][t]
                 
-                if not self.chronos.stillValidRestrict():
+                if not self.chronos.stillValidMIP():
                     break
             print("SI", rangeOfSequences, numberNurses, numberSuccess)
-        if not self.chronos.stillValidRestrict():
+        if not self.chronos.stillValidMIP():
             break
-        
-    #print("SM", totalNumberOfSucces)
-    
-    #if totalNumberOfSucces < 10:
-    #    keepsDiving = False
-    #    break
 
-def manager_seqHuge(self, beta):
+def manager_seqHugeWorser(self, beta):
     self.startSeqs()
 
     numberOfIters = 250
-    optionsNumberNurses = [1,2,3,4]
+    optionsNumberNurses = [4]
     numberOfTries = 1
 
     numberNurses = list(dict.fromkeys(optionsNumberNurses))
@@ -137,37 +131,40 @@ def manager_seqHuge(self, beta):
                 s, move = self.run_seqNursesFromModel(numberOfNurses = numberNurses, rangeOfSequences = rangeOfSequences, numberOfTries = numberOfTries, worse = True, better = True, equal = True)
                 
                 if s:
-                    if self.penalties.total <= self.penalties.best:
-                        self.penalties.best = self.penalties.total
+                    newObj = move["nD"] + move["nP"]
+                    if newObj < self.penalties.best:
+                        self.penalties.best = newObj
                         #totalNumberOfSucces += 1
                         numberSuccess += 1
                             
                         self.commit_sequenceMany(move)
-                        print("SH+", self.penalties.total, self.penalties.best)
-                        if move["nD"] + move["nP"] < self.penalties.total:
+                        print("SH+", self.penalties.total, self.penalties.best, newObj)
+                        if newObj < self.penalties.best:
                             for i in range(self.nurseModel.I):
                                 for d in range(self.nurseModel.D):
                                     for t in range(self.nurseModel.T):
                                         self.tmpBestSol.solution[i][d][t] = self.currentSol.solution[i][d][t]
 
-                    elif self.penalties.total <= max(self.penalties.best*1.1, self.penalties.best+1000):
-                        print("SH~", self.penalties.total, self.penalties.best)
+                    elif newObj <= max(self.penalties.best*1.1, self.penalties.best+1000):
+                        print("SH~", self.penalties.total, self.penalties.best, newObj)
+                        self.commit_sequenceMany(move)
+                    elif newObj <= self.penalties.total:
+                        print("SH=", self.penalties.total, self.penalties.best, newObj)
                         self.commit_sequenceMany(move)
                     else:  
-                        newPenalty = move["nD"] + move["nP"]
                         randomFactor = random.random()
-                        expFunction = math.e**(-(newPenalty - self.penalties.best)/(self.penalties.best*beta))
+                        expFunction = math.e**(-(newObj - self.penalties.best)/(self.penalties.best*beta))
                         if randomFactor < expFunction:
-                            print("SH--", self.penalties.total, self.penalties.best, newPenalty, randomFactor, expFunction)
+                            print("SH--", self.penalties.total, self.penalties.best, newObj, randomFactor, expFunction)
                             self.commit_sequenceMany(move)
                         else:
-                            print("SH-_", self.penalties.total, self.penalties.best, newPenalty, randomFactor, expFunction)
+                            print("SH-_", self.penalties.total, self.penalties.best, newObj, randomFactor, expFunction)
 
 
-                if not self.chronos.stillValidRestrict():
+                if not self.chronos.stillValidMIP():
                     break
             print("SH", rangeOfSequences, numberNurses, numberSuccess)
-        if not self.chronos.stillValidRestrict():
+        if not self.chronos.stillValidMIP():
             break
         
     #print("SM", totalNumberOfSucces)

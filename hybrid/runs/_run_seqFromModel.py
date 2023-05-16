@@ -26,7 +26,7 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
             x[d][t].ub = 1
 
     tries = 0
-    while tries < numberOfTries and self.chronos.stillValidRestrict():
+    while tries < numberOfTries and self.chronos.stillValidMIP():
 
         m.setParam("TimeLimit", self.chronos.timeLeft())
             

@@ -18,7 +18,7 @@ def internal_run_seqFromModel_fixed(self, nurse:int, day:int, rangeOfSequences:i
             x[d][t].lb = 0
             x[d][t].ub = 1
 
-    if self.chronos.stillValidRestrict():
+    if self.chronos.stillValidMIP():
 
         m.setParam("TimeLimit", self.chronos.timeLeft())
         
