@@ -49,5 +49,5 @@ def run_seqNursesFromModel(self, numberOfNurses:int, rangeOfSequences:int, numbe
             return True, {"s": moves, "nP": newPref, "nD": newDemand}
 
         tries += 1
-
+        
     return False, None

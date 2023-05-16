@@ -27,6 +27,7 @@ class penalties:
     preference_total: int
 
     total: int
+    best: int
 
 class tmp:
 
@@ -58,6 +59,7 @@ class Hybrid:
     from .prepare._calculateHelper import calculateHelper
     from .prepare._setSolToX import solToX
     from .prepare._setSolToParallel import solToParallel
+    from .prepare._setBestSolToX import bestSolToX
     
     #####generators
     from .generators._generateSingleNurseModel import generateSingleNurseModel
@@ -96,6 +98,8 @@ class Hybrid:
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
 
+    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorter, manager_seqHuge
+
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         
         self.nurseModel = nurseModel
@@ -115,26 +119,18 @@ class Hybrid:
         self.chronos.stopCounter()
         print("Start working")
         
+        self.manager_singleDeep()
+        beta = 0.1
+        fbeta = 0.5
+        numberOfIters = 5000
+        addNumberOfIters = 250
         while self.chronos.stillValidRestrict():
 
-            print("!!!!!")
-            self.main_seqFromModel()
-
-            print("@@@@@")
-            self.solToX()
-            self.calculateHelper()
-            self.main_runSingleMany()
-
-            print("#####")
-            self.solToParallel()
-            self.main_seqNursesFromModel()
-
-            print("$$$$$")
-            self.solToX()
-            self.calculateHelper()
-            self.main_runSingle()
-
-            break
+            self.manager_singleSearch(numberOfIters)
+            #self.manager_seqShorter()
+            self.manager_seqHuge(beta)
+            beta *= fbeta
+            numberOfIters += addNumberOfIters
 
         ########################################
 
@@ -143,10 +139,10 @@ class Hybrid:
 
         ########################################
         print("-->",self.startObj, self.penalties.total, self.penalties.preference_total, self.penalties.demand)
-        self.solToX()
-        self.nurseModel.model.m.update()
+        self.bestSolToX()
         m.setParam("TimeLimit", 43200)
         
+        m.update()
         self.chronos.startCounter("START_OPTIMIZE_LAST")
         m.optimize()
         self.chronos.stopCounter()
@@ -164,8 +160,8 @@ class Hybrid:
             return True, self.nurseModel
         
         else:
-            #self.nurseModel.solution = Solution().getFromLb(self.nurseModel.model.x)
-            #self.nurseModel.solution.printSolution("failed.sol", self.nurseModel.data.sets)
+            self.nurseModel.solution = Solution().getFromLb(self.nurseModel.model.x)
+            self.nurseModel.solution.printSolution("failed.sol", self.nurseModel.data.sets)
             self.chronos.printMessage(ORIGIN_SOLVER, SOLVER_ITERATION_NO_SOLUTION, False)
             
         self.chronos.printMessage(ORIGIN_SOLVER, "NOT_ABLE_TO_SAVE", True)

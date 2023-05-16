@@ -42,4 +42,3 @@ def commit_sequenceMany(self, moves):
                 
                 self.helperVariables.workingDays[nurse].append(day)
         
-    self.parallelModels[nurse]["m"].update()

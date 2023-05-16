@@ -30,6 +30,7 @@ class Solver:
             
             m.setParam("TimeLimit", self.chronos.timeLeft())
             
+            m.update()
             self.chronos.startCounter(START_OPTIMIZE)
             m.optimize()
             self.chronos.stopCounter()

@@ -7,7 +7,6 @@ def main_runSingle(self):
             s, move = self.run_single(worse = True, better = True, equal = True)
             
             if s:
-                print(move["nD"]+move["nP"])
                 self.commit_single(move)
                 numberSuccess += 1
                 

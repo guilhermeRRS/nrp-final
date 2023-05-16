@@ -8,11 +8,12 @@ def setDays(self, m, dm_x, minimumNumberOfDays, maximumNumberOfDays):
     
     numberOfDaysConstraint_min = m.addConstr(minimumNumberOfDays <= gp.quicksum(dm_x[j] for j in range(self.nurseModel.D)))
     numberOfDaysConstraint_max = m.addConstr(gp.quicksum(dm_x[j] for j in range(self.nurseModel.D)) <= maximumNumberOfDays)
-    m.update()
-
+    
+    
     if not self.chronos.stillValidRestrict():
         return -1
 
+    m.update()
     m.optimize()
     
     m.remove(numberOfDaysConstraint_min)
@@ -39,12 +40,10 @@ def setShifts(self, m, sm_x, dm_x, i:int = -1):
         constraintsToDelete.append(m.addConstr(self.nurseModel.data.parameters.b_min[i] <= gp.quicksum(sm_x[j][k]*self.nurseModel.data.parameters.l_t[k] for j in range(self.nurseModel.D) for k in range(self.nurseModel.T))))
         constraintsToDelete.append(m.addConstr(gp.quicksum(sm_x[j][k]*self.nurseModel.data.parameters.l_t[k] for j in range(self.nurseModel.D) for k in range(self.nurseModel.T)) <= self.nurseModel.data.parameters.b_max[i]))
     
-    
-    m.update()
-
     if not self.chronos.stillValidRestrict():
         return -1
 
+    m.update()
     m.optimize()
     
     for constraintToDelete in constraintsToDelete:

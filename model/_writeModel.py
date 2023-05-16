@@ -114,7 +114,6 @@ def _write_model(self, path, data: Data, name = "Model"):
     #Objetivo
     m.setObjective(sum(v[i][d][t] for i in range(I) for d in range(D) for t in range(T)) + sum(y[d][t]*parameters["w_min"][d][t] for d in range(D) for t in range(T)) + sum(z[d][t]*parameters["w_max"][d][t] for d in range(D) for t in range(T)), GRB.MINIMIZE)
     
-    m.update()
 
     try:
         m.write(path)

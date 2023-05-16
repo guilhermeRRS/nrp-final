@@ -86,6 +86,5 @@ def generateSingleNurseModel(self, nurse:int):
         for t in range(T):
             m.addConstr(x[d][t] == 0)
             
-    m.update()
 
     return m, x

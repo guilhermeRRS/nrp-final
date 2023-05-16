@@ -67,6 +67,8 @@ class Conquer(MipInterface):
             
         if self.chronos.stillValidRestrict() and success:
             
+            m.update()
+
             m.setParam("TimeLimit", self.chronos.timeLeft())
             m.setParam("Solutionlimit", 1)
             

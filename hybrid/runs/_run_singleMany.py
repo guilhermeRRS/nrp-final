@@ -17,7 +17,7 @@ def run_singleMany(self, numberOfNurses:int, worse:bool = False, better:bool = F
     oldShifts = []
     allNurseOptions = []
     for nurse in nurses:
-
+        
         ###the edge
         shiftBefore = "free"
         if day - 1 >= 0:

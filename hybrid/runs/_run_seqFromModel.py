@@ -30,6 +30,7 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
 
         m.setParam("TimeLimit", self.chronos.timeLeft())
             
+        m.update()
         self.chronos.startCounter(f"Internal optinization number {tries}")
         m.optimize()
         self.chronos.stopCounter()
@@ -43,11 +44,14 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
             for d in range(dayStart, dayEnd+1):
                 newX.append(-1)
                 for t in range(self.nurseModel.T):
-                    x[d][t].lb = self.currentSol.solution[nurse][d][t]
-                    x[d][t].ub = self.currentSol.solution[nurse][d][t]
                     if x[d][t].x >= 0.5:
                         newX[-1] = t
                         break
+                    
+            for d in range(dayStart, dayEnd+1):
+                for t in range(self.nurseModel.T):
+                    x[d][t].lb = self.currentSol.solution[nurse][d][t]
+                    x[d][t].ub = self.currentSol.solution[nurse][d][t]
                     
             newPref, newDemand = self.math_sequence(nurse, dayStart, dayEnd, self.helperVariables.projectedX[nurse][dayStart:(dayEnd+1)], newX)
             if self.evaluateFO(self.penalties.total, newPref + newDemand, worse, better, equal):

@@ -53,6 +53,5 @@ def generateShiftModel(self):
     
     shift_model.setObjective(preference_total + demand, GRB.MINIMIZE)
     
-    shift_model.update()
 
     return shift_model, sm_x, preference_total, demand

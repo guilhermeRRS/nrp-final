@@ -18,7 +18,6 @@ def create_days_model(self, days_model, dm_x, dm_k, i, sets, parameters):
 	for j in range(len(sets.N_i[i])):
 		constraintsDay.append(days_model.addConstr(dm_x[sets.N_i[i][j]] == 0))
 
-	days_model.update()
 	return constraintsDay, days_model, dm_x
 
 def create_clean_days_model(self, c_min, o_min, sets, parameters):
@@ -43,7 +42,6 @@ def create_clean_days_model(self, c_min, o_min, sets, parameters):
 	#FO -> saves the number of days working
 	days_model.setObjective(gp.quicksum(dm_x[d] for d in range(len(sets.D))), GRB.MINIMIZE)
 
-	days_model.update()
 	return days_model, dm_x, dm_k
 	
 def create_shift_model(self, shift_model, sm_x, i, sets, parameters, garantee:bool = False):
@@ -58,7 +56,6 @@ def create_shift_model(self, shift_model, sm_x, i, sets, parameters, garantee:bo
 	constraintsShift.append(shift_model.addConstr(parameters.b_min[i] <= gp.quicksum(sm_x[j][k]*parameters.l_t[k] for j in range(len(sets.D)) for k in range(len(sets.T)))))
 	constraintsShift.append(shift_model.addConstr(gp.quicksum(sm_x[j][k]*parameters.l_t[k] for j in range(len(sets.D)) for k in range(len(sets.T))) <= parameters.b_max[i]))
 	
-	shift_model.update()
 	return constraintsShift, shift_model, sm_x
 	
 def create_clean_shift_model(self, sets, parameters):
@@ -76,5 +73,4 @@ def create_clean_shift_model(self, sets, parameters):
 	#FO -> saves the workload
 	shift_model.setObjective(gp.quicksum(sm_x[j][k]*parameters.l_t[k] for j in range(len(sets.D)) for k in range(len(sets.T))), GRB.MINIMIZE)
 		
-	shift_model.update()
 	return shift_model, sm_x

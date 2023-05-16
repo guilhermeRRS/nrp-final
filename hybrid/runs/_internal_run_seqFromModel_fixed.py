@@ -21,7 +21,8 @@ def internal_run_seqFromModel_fixed(self, nurse:int, day:int, rangeOfSequences:i
     if self.chronos.stillValidRestrict():
 
         m.setParam("TimeLimit", self.chronos.timeLeft())
-            
+        
+        m.update()
         self.chronos.startCounter(f"Internal optinization")
         m.optimize()
         self.chronos.stopCounter()
@@ -35,13 +36,15 @@ def internal_run_seqFromModel_fixed(self, nurse:int, day:int, rangeOfSequences:i
             for d in range(dayStart, dayEnd+1):
                 newX.append(-1)
                 for t in range(self.nurseModel.T):
-                    x[d][t].lb = self.currentSol.solution[nurse][d][t]
-                    x[d][t].ub = self.currentSol.solution[nurse][d][t]
                     if x[d][t].x >= 0.5:
                         newX[-1] = t
                         break
+            for d in range(dayStart, dayEnd+1):
+                for t in range(self.nurseModel.T):
+                    x[d][t].lb = self.currentSol.solution[nurse][d][t]
+                    x[d][t].ub = self.currentSol.solution[nurse][d][t]
             for restriction in restrictions:
-                m.remove(restriction)  
+                m.remove(restriction)
             return True, {"n": nurse, "d": dayStart, "s": newX}
             
         else:

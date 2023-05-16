@@ -19,6 +19,7 @@ def preProcessFromSolution(self):
     #print("Calculating")
     self.parallelModels = []
     self.currentSol = Solution().loadSolution(self.nurseModel.solution.solution)
+    self.tmpBestSol = Solution().loadSolution(self.nurseModel.solution.solution)
     for i in range(self.nurseModel.I):
         self.helperVariables.shiftTypeCounter.append([])
         self.helperVariables.workloadCounter.append(0)
@@ -82,6 +83,7 @@ def preProcessFromSolution(self):
             self.helperVariables.oneInnerJourney_rt[t][t2] = []
             
     self.penalties.total = self.penalties.demand + self.penalties.preference_total
+    self.penalties.best = self.penalties.total
 
     #print("The monster")
     highest_cmax = max(self.nurseModel.data.parameters.c_max)
