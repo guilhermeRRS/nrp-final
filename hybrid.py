@@ -43,8 +43,8 @@ nurse.setPathData(f"{PATH_DATA}Instance{instance}.txt")
 nurse.setPathModel(f"{PATH_MODEL}modelo{instance}.lp")
 nurse.setPathSolution(f"{PATH_INITIAL}{instance}.sol")
 
-#chronos = Chronos(timeLimit = (timeLimit - bestTimes[int(instance)-1]))
-chronos = Chronos(timeLimit = timeLimit)
+chronos = Chronos(timeLimit = (timeLimit - bestTimes[int(instance)-1]))
+#chronos = Chronos(timeLimit = timeLimit)
 
 
 if True:

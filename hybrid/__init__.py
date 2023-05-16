@@ -63,6 +63,7 @@ class Hybrid:
     
     #####generators
     from .generators._generateSingleNurseModel import generateSingleNurseModel
+    from .generators._generateShiftModel import generateShiftModel
 
     ####maths
     from .maths._forSingle import math_single, math_single_demandDelta
@@ -98,7 +99,7 @@ class Hybrid:
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
 
-    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorter, manager_seqHugeWorser
+    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorterWorser, manager_seqHugeWorser, run_inner
 
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         
@@ -116,21 +117,33 @@ class Hybrid:
         self.currentObj = startObj
         self.chronos.startCounter("SETTING_START")
         self.preProcessFromSolution()
+        self.SA_shift_model, self.SA_sm_x, self.SA_preference_total, self.SA_demand = self.generateShiftModel()
         self.chronos.stopCounter()
         print("Start working")
         
         self.manager_singleDeep()
         beta = 0.1
         fbeta = 0.5
-        numberOfIters = 5000
-        addNumberOfIters = 250
+        numberOfIters = 2000
+        addNumberOfIters = 100
+        numberNurses = 4
+        fNumberNurses = 0.2
         while self.chronos.stillValidMIP():
 
-            self.manager_singleSearch(numberOfIters)
-            self.manager_seqShorter()
-            self.manager_seqHugeWorser(beta)
+            self.manager_seqHugeWorser(beta, numberNurses)
+            self.manager_singleSearch(2*numberOfIters)
+            self.manager_seqShorterWorser()
+            self.manager_singleSearch(2*numberOfIters)
+            self.manager_seqShorterWorser()
+            self.manager_singleSearch(2*numberOfIters)
+            self.manager_seqShorterWorser()
+            self.manager_singleSearch(3*numberOfIters)
             beta *= fbeta
             numberOfIters += addNumberOfIters
+            numberNurses += fNumberNurses
+
+            self.run_inner(200)
+                
 
         ########################################
 
@@ -138,7 +151,7 @@ class Hybrid:
         ########## THE TIME COST MAY BE REALY SMALL, SO IT IS FIXED A HUGE TIMELIMIT FOR THE SOLVER
 
         ########################################
-        print("-->",self.startObj, self.penalties.total, self.penalties.preference_total, self.penalties.demand)
+        print("-->",self.startObj, self.penalties.best)
         self.bestSolToX()
         m.setParam("TimeLimit", self.chronos.timeLeft())
         

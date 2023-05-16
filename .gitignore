@@ -1,0 +1,9 @@
+/job*
+*/job*
+/o_logs
+/o_solutions
+*.sol
+*.log
+*/__pycache__/*
+
+*.json

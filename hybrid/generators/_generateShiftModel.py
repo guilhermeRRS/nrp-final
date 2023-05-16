@@ -13,7 +13,7 @@ def generateShiftModel(self):
 
     shift_model = gp.Model()
     sm_x = [[[shift_model.addVar(vtype=GRB.BINARY) for k in range(len(sets.T))] for j in range(len(sets.D))] for i in range(len(sets.I))]
-    v = [[[shift_model.addVar(vtype=GRB.BINARY) for k in range(len(sets.T))] for j in range(len(sets.D))] for i in range(len(sets.I))]
+    v = [[[shift_model.addVar(vtype=GRB.INTEGER) for k in range(len(sets.T))] for j in range(len(sets.D))] for i in range(len(sets.I))]
     z = [[shift_model.addVar(vtype=GRB.INTEGER) for k in range(len(sets.T))] for j in range(len(sets.D))]
     y = [[shift_model.addVar(vtype=GRB.INTEGER) for k in range(len(sets.T))] for j in range(len(sets.D))]    
 
@@ -27,7 +27,7 @@ def generateShiftModel(self):
         
         for j in range(len(sets.D) - 1):
             for k in range(len(sets.T)):
-                shift_model.addConstr(parameters["q"][i][j][k]*(1 - sm_x[i][j][k]) + parameters["p"][i][j][k]*sm_x[i][j][k] == v[i][j][k])
+                shift_model.addConstr(parameters.q[i][j][k]*(1 - sm_x[i][j][k]) + parameters.p[i][j][k]*sm_x[i][j][k] == v[i][j][k])
 
                 if parameters.m_max[i][k] == 0:
                     shift_model.addConstr(sm_x[i][j][k] == 0)
@@ -38,7 +38,7 @@ def generateShiftModel(self):
     
         d = len(sets.D) - 1
         for k in range(len(sets.T)):
-            shift_model.addConstr(parameters["q"][i][d][k]*(1 - sm_x[i][d][k]) + parameters["p"][i][d][k]*sm_x[i][d][k] == v[i][d][k])
+            shift_model.addConstr(parameters.q[i][d][k]*(1 - sm_x[i][d][k]) + parameters.p[i][d][k]*sm_x[i][d][k] == v[i][d][k])
             if parameters.m_max[i][k] == 0:
                 shift_model.addConstr(sm_x[i][d][k] == 0)
                 
@@ -46,10 +46,10 @@ def generateShiftModel(self):
 	
     for d in range(D):
         for t in range(T):
-            shift_model.addConstr(sum(sm_x[i][d][t] for i in range(I)) - z[d][t] + y[d][t] == parameters["u"][d][t])
+            shift_model.addConstr(sum(sm_x[i][d][t] for i in range(I)) - z[d][t] + y[d][t] == parameters.u[d][t])
 
     shift_model.addConstr(sum(v[i][d][t] for i in range(I) for d in range(D) for t in range(T)) == preference_total)
-    shift_model.addConstr(sum(y[d][t]*parameters["w_min"][d][t] for d in range(D) for t in range(T)) + sum(z[d][t]*parameters["w_max"][d][t] for d in range(D) for t in range(T)) == demand)
+    shift_model.addConstr(sum(y[d][t]*parameters.w_min[d][t] for d in range(D) for t in range(T)) + sum(z[d][t]*parameters.w_max[d][t] for d in range(D) for t in range(T)) == demand)
     
     shift_model.setObjective(preference_total + demand, GRB.MINIMIZE)
     

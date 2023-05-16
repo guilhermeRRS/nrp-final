@@ -1,103 +1,26 @@
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:12:52.932618 | INICIALIZATION |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-16 04:09:52.700916 | INICIALIZATION |
 
 ===== CHRONOS_MANAGER =====
-Root time:		2023-05-15 00:12:52.932618
-Time limit:		300
+Root time:		2023-05-16 04:09:52.700916
+Time limit:		150
 Valid:		True
-TimeLeft:		300.0
+TimeLeft:		150.0
 Size:		0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:12:57.665912 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-16 04:09:57.604081 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
 Name:		SETTING_START
 Log:		True
-Start:		2023-05-15 00:12:57.665912
-Stop Condition:		295.266706
+Start:		2023-05-16 04:09:57.604081
+Stop Condition:		145.096835
 Valid:		True
-TimeLeft:		295.266706
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:13:15.081062 | CHRONOS_MARK_STOP |
-
-===== CHRONOS_COUNTER =====
-Name:		SETTING_START
-Log:		True
-Start:		2023-05-15 00:12:57.665912
-Stop Condition:		295.266706
-Valid:		True
-TimeLeft:		277.851556
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:13:25.991882 | CHRONOS_MARK_START |
-
-===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_LAST
-Log:		True
-Start:		2023-05-15 00:13:25.991882
-Stop Condition:		266.940736
-Valid:		True
-TimeLeft:		266.940736
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:13:26.917757 | CHRONOS_MARK_STOP |
-
-===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_LAST
-Log:		True
-Start:		2023-05-15 00:13:25.991882
-Stop Condition:		266.940736
-Valid:		True
-TimeLeft:		266.014861
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-15 00:13:26.918756 | SOLVER_GUROBI_OUTPUT |
-
-===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		2
-SolCount:		1
-Valid:		True
-Obj:		397118.0
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> INFO | ORIGIN_MAIN | 2023-05-15 00:13:28.383916 | 
-SUCCESS_SOLVED
-<<<<<<<<<<<<<<<
-
-
->>>>> INFO | ORIGIN_MAIN | 2023-05-15 00:13:28.405903 | 
-SOLUTION_PRINTING_SUCCESS
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-15 00:13:28.405903 | FINISHED |
-
-===== CHRONOS_MANAGER =====
-Root time:		2023-05-15 00:12:52.932618
-Time limit:		300
-Valid:		True
-TimeLeft:		264.526715
-Size:		0
+TimeLeft:		145.096835
 ===============
 
 <<<<<<<<<<<<<<<

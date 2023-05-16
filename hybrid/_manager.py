@@ -1,6 +1,8 @@
 import math
 import random
 
+from model import GurobiOptimizedOutput
+
 
 def startSingles(self):
     self.solToX()
@@ -55,16 +57,17 @@ def manager_singleSearch(self, numberOfIters):
             for i in range(numberOfIters):
                 
                 s, move = self.run_singleMany(numberOfNurses = numberNurses, worse = False, better = True, equal = True)
-
+                
                 if s:
-                    if move["nD"] + move["nP"] < self.penalties.total:
+                    newObj = move["nD"] + move["nP"]
+                    if newObj < self.penalties.total:
                         numberSuccess += 1
                         
                     self.commit_singleMany(move)
                     print("1S", self.penalties.total, self.penalties.best)
 
-                    if self.penalties.total < self.penalties.best:
-                        self.penalties.best = self.penalties.total
+                    if newObj < self.penalties.best:
+                        self.penalties.best = newObj
                         for i in range(self.nurseModel.I):
                             for d in range(self.nurseModel.D):
                                 for t in range(self.nurseModel.T):
@@ -82,14 +85,14 @@ def manager_singleSearch(self, numberOfIters):
             keepsDiving = False
             break
 
-def manager_seqShorterWorser(self):
+def manager_seqShorterWorser(self, beta:int = 1):
     self.startSeqs()
 
-    numberOfIters = 100
+    numberOfIters = 1000
     optionsNumberNurses = [2]
 
     numberNurses = list(dict.fromkeys(optionsNumberNurses))
-    rangeOfSequencesOptions = [1]
+    rangeOfSequencesOptions = [2]
     
     for rangeOfSequences in rangeOfSequencesOptions:
         for numberNurses in optionsNumberNurses:
@@ -98,27 +101,44 @@ def manager_seqShorterWorser(self):
                 s, move = self.run_seqNursesFromModel(numberOfNurses = numberNurses, rangeOfSequences = rangeOfSequences, numberOfTries = 1, worse = True, better = True, equal = True)
         
                 if s:
-                    numberSuccess += 1
-                    self.commit_sequenceMany(move)
-                    print("SI", self.penalties.total, self.penalties.best)
-                    if self.penalties.total < self.penalties.best:
-                        self.penalties.best = self.penalties.total
-                        for i in range(self.nurseModel.I):
-                            for d in range(self.nurseModel.D):
-                                for t in range(self.nurseModel.T):
-                                    self.tmpBestSol.solution[i][d][t] = self.currentSol.solution[i][d][t]
+                    newObj = move["nD"] + move["nP"]
+                    if newObj < self.penalties.best:
+                        numberSuccess += 1
+                        self.commit_sequenceMany(move)
+                        print("SI", self.penalties.total, self.penalties.best)
+                        if self.penalties.total < self.penalties.best:
+                            self.penalties.best = self.penalties.total
+                            for i in range(self.nurseModel.I):
+                                for d in range(self.nurseModel.D):
+                                    for t in range(self.nurseModel.T):
+                                        self.tmpBestSol.solution[i][d][t] = self.currentSol.solution[i][d][t]
                 
+                    elif newObj <= max(self.penalties.best*1.1, self.penalties.best+1000):
+                        print("SI~", self.penalties.total, self.penalties.best, newObj)
+                        self.commit_sequenceMany(move)
+                    elif newObj <= self.penalties.total:
+                        print("SI=", self.penalties.total, self.penalties.best, newObj)
+                        self.commit_sequenceMany(move)
+                    else:  
+                        randomFactor = random.random()
+                        expFunction = math.e**(-(newObj - self.penalties.best)/(self.penalties.best*beta))
+                        if randomFactor < expFunction:
+                            print("SI--", self.penalties.total, self.penalties.best, newObj, randomFactor, expFunction)
+                            self.commit_sequenceMany(move)
+                        else:
+                            print("SI-_", self.penalties.total, self.penalties.best, newObj, randomFactor, expFunction)
+
                 if not self.chronos.stillValidMIP():
                     break
             print("SI", rangeOfSequences, numberNurses, numberSuccess)
         if not self.chronos.stillValidMIP():
             break
 
-def manager_seqHugeWorser(self, beta):
+def manager_seqHugeWorser(self, beta, numberNurses):
     self.startSeqs()
 
     numberOfIters = 250
-    optionsNumberNurses = [4]
+    optionsNumberNurses = [math.floor(numberNurses)]
     numberOfTries = 1
 
     numberNurses = list(dict.fromkeys(optionsNumberNurses))
@@ -139,11 +159,10 @@ def manager_seqHugeWorser(self, beta):
                             
                         self.commit_sequenceMany(move)
                         print("SH+", self.penalties.total, self.penalties.best, newObj)
-                        if newObj < self.penalties.best:
-                            for i in range(self.nurseModel.I):
-                                for d in range(self.nurseModel.D):
-                                    for t in range(self.nurseModel.T):
-                                        self.tmpBestSol.solution[i][d][t] = self.currentSol.solution[i][d][t]
+                        for i in range(self.nurseModel.I):
+                            for d in range(self.nurseModel.D):
+                                for t in range(self.nurseModel.T):
+                                    self.tmpBestSol.solution[i][d][t] = self.currentSol.solution[i][d][t]
 
                     elif newObj <= max(self.penalties.best*1.1, self.penalties.best+1000):
                         print("SH~", self.penalties.total, self.penalties.best, newObj)
@@ -172,3 +191,34 @@ def manager_seqHugeWorser(self, beta):
     #if totalNumberOfSucces < 10:
     #    keepsDiving = False
     #    break
+
+def run_inner(self, time):
+    restrictions = []
+    for i in range(self.nurseModel.I):
+        for d in range(self.nurseModel.D):
+            restrictions.append(self.SA_shift_model.addConstr(sum(self.SA_sm_x[i][d][t] for t in range(self.nurseModel.T)) == sum(self.tmpBestSol.solution[i][d][t] for t in range(self.nurseModel.T))))
+            for t in range(self.nurseModel.T):
+                self.SA_sm_x[i][d][t].Start = self.tmpBestSol.solution[i][d][t]
+    self.SA_shift_model.setParam("TimeLimit", min(self.chronos.timeLeft(), time))
+    
+    self.SA_shift_model.update()
+    self.chronos.startCounter("START_OPTIMIZE_INNER")
+    self.SA_shift_model.optimize()
+    self.chronos.stopCounter()
+    
+    gurobiReturn = GurobiOptimizedOutput(self.SA_shift_model)
+
+    self.chronos.printObj("ORIGIN_SOLVER", "SOLVER_GUROBI_OUTPUT", gurobiReturn)
+
+    if gurobiReturn.valid():
+        self.penalties.best = self.SA_preference_total.x + self.SA_demand.x
+        for i in range(self.nurseModel.I):
+            for d in range(self.nurseModel.D):
+                for t in range(self.nurseModel.T):
+                    self.tmpBestSol.solution[i][d][t] = 1 if self.SA_sm_x[i][d][t].x >= 0.5 else 0
+                    self.currentSol.solution[i][d][t] = 1 if self.SA_sm_x[i][d][t].x >= 0.5 else 0
+    else:
+        print("Discarded inner solution")
+
+    for restriction in restrictions:
+        self.SA_shift_model.remove(restriction)
