@@ -28,7 +28,7 @@ def run_seqFromModel(self, rangeOfSequences:int, numberOfTries:int , worse:bool 
     tries = 0
     while tries < numberOfTries and self.chronos.stillValidMIP():
 
-        m.setParam("TimeLimit", self.chronos.timeLeft())
+        m.setParam("TimeLimit", self.chronos.timeLeftForVND())
             
         m.update()
         self.chronos.startCounter(f"Internal optinization number {tries}")

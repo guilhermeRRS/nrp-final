@@ -238,7 +238,7 @@ def run_inner(self, time):
             restrictions.append(self.SA_shift_model.addConstr(sum(self.SA_sm_x[i][d][t] for t in range(self.nurseModel.T)) == sum(self.currentSol.solution[i][d][t] for t in range(self.nurseModel.T))))
             for t in range(self.nurseModel.T):
                 self.SA_sm_x[i][d][t].Start = self.currentSol.solution[i][d][t]
-    self.SA_shift_model.setParam("TimeLimit", min(self.chronos.timeLeft(), time))
+    self.SA_shift_model.setParam("TimeLimit", min(self.chronos.timeLeftForVND(), time))
     
     self.SA_shift_model.update()
     self.chronos.startCounter("START_OPTIMIZE_INNER")

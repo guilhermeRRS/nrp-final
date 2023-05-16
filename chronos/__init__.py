@@ -91,8 +91,11 @@ class Chronos:
     def stillValidMIP(self):
         return (datetime.datetime.now() - self.rootTime).total_seconds() < self.timeLimit*0.75
     
-    def timeLeft(self):
-        return self.timeLimit - (datetime.datetime.now() - self.rootTime).total_seconds()
+    def timeLeft(self, factor:int = 1):
+        return self.timeLimit*factor - (datetime.datetime.now() - self.rootTime).total_seconds()
+    
+    def timeLeftForVND(self):
+        return max(1, self.timeLeft(factor=0.75))
 
     def startCounter(self, name: str, log: bool = True):
         chronos = ChronosCounter(name = name, log = log, stop = self.timeLeft())

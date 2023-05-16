@@ -20,7 +20,7 @@ def internal_run_seqFromModel_fixed(self, nurse:int, day:int, rangeOfSequences:i
 
     if self.chronos.stillValidMIP():
 
-        m.setParam("TimeLimit", self.chronos.timeLeft())
+        m.setParam("TimeLimit", self.chronos.timeLeftForVND())
         
         m.update()
         self.chronos.startCounter(f"Internal optinization")
