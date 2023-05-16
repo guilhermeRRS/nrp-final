@@ -60,6 +60,7 @@ class Hybrid:
     from .prepare._setSolToX import solToX
     from .prepare._setSolToParallel import solToParallel
     from .prepare._setBestSolToX import bestSolToX
+    from .prepare._setBestAsCurrent import setBestAsCurrent
     
     #####generators
     from .generators._generateSingleNurseModel import generateSingleNurseModel
@@ -99,7 +100,7 @@ class Hybrid:
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
 
-    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorterWorser, manager_seqHugeWorser, run_inner
+    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorterBetter, manager_seqShorterWorser, manager_seqHugeWorser, run_inner
 
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         
@@ -124,26 +125,33 @@ class Hybrid:
         self.manager_singleDeep()
         beta = 0.1
         fbeta = 0.5
-        numberOfIters = 2000
-        addNumberOfIters = 100
+        numberOfIters = 1000
         numberNurses = 4
         fNumberNurses = 0.2
-        while self.chronos.stillValidMIP():
+        keepVND = True
+        while self.chronos.stillValidMIP() and keepVND:
+            begginBest = self.penalties.best
+            self.setBestAsCurrent()
 
             self.manager_seqHugeWorser(beta, numberNurses)
-            self.manager_singleSearch(2*numberOfIters)
+            self.manager_seqShorterBetter()
+            self.manager_singleSearch(numberOfIters, numberOfIters*0.01)
             self.manager_seqShorterWorser()
-            self.manager_singleSearch(2*numberOfIters)
-            self.manager_seqShorterWorser()
-            self.manager_singleSearch(2*numberOfIters)
-            self.manager_seqShorterWorser()
-            self.manager_singleSearch(3*numberOfIters)
+            self.manager_singleSearch(numberOfIters, numberOfIters*0.025)
+
+            #add a fix per nurse :)
+
             beta *= fbeta
-            numberOfIters += addNumberOfIters
             numberNurses += fNumberNurses
 
             self.run_inner(200)
+
+            endBest = self.penalties.best
+
+            if begginBest - endBest < 100:
+                keepVND = False
                 
+        print("Got in universal improving",keepVND)
 
         ########################################
 
