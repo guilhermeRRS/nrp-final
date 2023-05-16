@@ -19,7 +19,7 @@ class GurobiOptimizedOutput:
         self.m = m
 
     def valid(self):
-        return not (not (self.status in (GRB.OPTIMAL, GRB.TIME_LIMIT, GRB.SOLUTION_LIMIT)) or self.solCount == 0)
+        return not (not (self.status in (GRB.OPTIMAL, GRB.TIME_LIMIT, GRB.SOLUTION_LIMIT, GRB.USER_OBJ_LIMIT)) or self.solCount == 0)
     
     def __str__(self):
         return print_GurobiOptimizedOutput(self)

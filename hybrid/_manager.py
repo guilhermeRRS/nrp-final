@@ -38,7 +38,7 @@ def manager_singleDeep(self):
                 break
 
         print("11", numberSuccess)
-        if numberSuccess < 10:
+        if numberSuccess < 5:
             keepsDiving = False
 
 def manager_singleSearch(self, numberOfIters, tol):
@@ -231,7 +231,7 @@ def manager_seqHugeWorser(self, beta, numberNurses):
     #    keepsDiving = False
     #    break
 
-def run_inner(self, time):
+def run_internal_shiftAll(self, time):
     restrictions = []
     for i in range(self.nurseModel.I):
         for d in range(self.nurseModel.D):
@@ -265,7 +265,112 @@ def run_inner(self, time):
                     for t in range(self.nurseModel.T):
                         self.currentSol.solution[i][d][t] = 1 if self.SA_sm_x[i][d][t].x >= 0.5 else 0
     else:
-        print("Discarded inner solution")
+        print("Discarded internal shift solution")
 
     for restriction in restrictions:
         self.SA_shift_model.remove(restriction)
+
+def run_internal_innerFix(self, time, numberOfNurses: int):
+
+    self.solToX()
+
+    allNurses = list(range(self.nurseModel.I))
+    nursesFree = random.sample(allNurses, k = math.floor(numberOfNurses))
+
+    for i in range(self.nurseModel.I):
+        if i in nursesFree:
+            for d in range(self.nurseModel.D):
+                for t in range(self.nurseModel.T):
+                    self.nurseModel.model.x[i][d][t].lb = 0
+                    self.nurseModel.model.x[i][d][t].ub = 1
+                    self.nurseModel.model.x[i][d][t].start = self.currentSol.solution[i][d][t]
+    
+            
+    self.nurseModel.model.m.setParam("TimeLimit", min(self.chronos.timeLeftForVND(), time))
+    self.nurseModel.model.m.setParam("BestObjStop", 0)
+    
+    self.nurseModel.model.m.update()
+    self.chronos.startCounter("START_OPTIMIZE_INNER")
+    self.nurseModel.model.m.optimize()
+    self.chronos.stopCounter()
+    
+    gurobiReturn = GurobiOptimizedOutput(self.nurseModel.model.m)
+
+    self.chronos.printObj("ORIGIN_SOLVER", "SOLVER_GUROBI_OUTPUT", gurobiReturn)
+
+    if gurobiReturn.valid():
+        newObj = self.nurseModel.model.m.objVal
+        print(self.penalties.best, newObj)
+        if newObj <= self.penalties.best: #here changes both
+            input("@")
+            self.penalties.best = newObj
+            for i in range(self.nurseModel.I):
+                for d in range(self.nurseModel.D):
+                    for t in range(self.nurseModel.T):
+                        self.tmpBestSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+                        self.currentSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+        else: #here only current
+            input("!")
+            self.penalties.total = newObj
+            for i in range(self.nurseModel.I):
+                for d in range(self.nurseModel.D):
+                    for t in range(self.nurseModel.T):
+                        self.currentSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+    else:
+        input("Discarded internal inner solution")
+
+
+def run_internal_balanced(self, time):
+
+    self.solToX()
+    self.calculateHelper()
+
+    for i in range(self.nurseModel.I):
+        for d in range(1,self.nurseModel.D-1):
+            if not ( d-1 in self.helperVariables.projectedX[i] and d+1 in self.helperVariables.projectedX[i] ):
+                if d in self.helperVariables.projectedX[i]:
+                    if random.random() >= 0.5:
+                        for t in range(self.nurseModel.T):
+                            self.nurseModel.model.x[i][d][t].lb = 0
+                            self.nurseModel.model.x[i][d][t].ub = 1
+                            self.nurseModel.model.x[i][d][t].start = self.currentSol.solution[i][d][t]
+                else:
+                    for t in range(self.nurseModel.T):
+                        self.nurseModel.model.x[i][d][t].lb = 0
+                        self.nurseModel.model.x[i][d][t].ub = 1
+                        self.nurseModel.model.x[i][d][t].start = self.currentSol.solution[i][d][t]
+    
+            
+    self.nurseModel.model.m.setParam("TimeLimit", min(self.chronos.timeLeftForVND(), time))
+    self.nurseModel.model.m.setParam("BestObjStop", 0.9*self.penalties.best)
+    
+    self.nurseModel.model.m.update()
+    self.chronos.startCounter("START_OPTIMIZE_INNER")
+    self.nurseModel.model.m.optimize()
+    self.chronos.stopCounter()
+    
+    gurobiReturn = GurobiOptimizedOutput(self.nurseModel.model.m)
+
+    self.chronos.printObj("ORIGIN_SOLVER", "SOLVER_GUROBI_OUTPUT", gurobiReturn)
+
+    if gurobiReturn.valid():
+        newObj = self.nurseModel.model.m.objVal
+        if newObj <= self.penalties.best: #here changes both
+            print(self.penalties.best, newObj)
+            self.penalties.best = newObj
+            input("S")
+            for i in range(self.nurseModel.I):
+                for d in range(self.nurseModel.D):
+                    for t in range(self.nurseModel.T):
+                        self.tmpBestSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+                        self.currentSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+        else: #here only current
+            print(self.penalties.best, newObj)
+            input("F")
+            self.penalties.total = newObj
+            for i in range(self.nurseModel.I):
+                for d in range(self.nurseModel.D):
+                    for t in range(self.nurseModel.T):
+                        self.currentSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+    else:
+        input("Discarded internal inner solution")

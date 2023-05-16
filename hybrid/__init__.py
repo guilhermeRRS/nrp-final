@@ -100,7 +100,7 @@ class Hybrid:
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
 
-    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorterBetter, manager_seqShorterWorser, manager_seqHugeWorser, run_inner
+    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorterBetter, manager_seqShorterWorser, manager_seqHugeWorser, run_internal_shiftAll, run_internal_innerFix, run_internal_balanced
 
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         
@@ -124,18 +124,17 @@ class Hybrid:
         
         self.manager_singleDeep()
         beta = 0.1
-        fbeta = 0.5
+        fbeta = 0.1
         numberOfIters = 1000
         numberNurses = 4
-        fNumberNurses = 0.2
+        fNumberNurses = 0.1
         keepVND = True
         while self.chronos.stillValidMIP() and keepVND:
             begginBest = self.penalties.best
             self.setBestAsCurrent()
 
-            self.manager_seqHugeWorser(beta, numberNurses)
-            self.manager_seqShorterBetter()
-            self.manager_singleSearch(numberOfIters, numberOfIters*0.01)
+            #self.manager_seqHugeWorser(beta, numberNurses)
+            #self.manager_singleSearch(numberOfIters, numberOfIters*0.01)
             self.manager_seqShorterWorser()
             self.manager_singleSearch(numberOfIters, numberOfIters*0.025)
 
@@ -144,7 +143,18 @@ class Hybrid:
             beta *= fbeta
             numberNurses += fNumberNurses
 
-            self.run_inner(200)
+            triesOfFix = 0
+            while self.chronos.stillValidMIP() and triesOfFix < 5:
+                input("Interanl Fix")
+                self.run_internal_innerFix(200, numberNurses)
+                triesOfFix += 1
+
+            if self.chronos.stillValidMIP():
+                input("Shift all")
+                self.run_internal_shiftAll(200)
+            if self.chronos.stillValidMIP():
+                input("Interanl balanced")
+                self.run_internal_balanced(200)
 
             endBest = self.penalties.best
 
@@ -162,6 +172,7 @@ class Hybrid:
         print("-->",self.startObj, self.penalties.best)
         self.bestSolToX()
         m.setParam("TimeLimit", self.chronos.timeLeft())
+        m.setParam("BestObjStop", 0)
         
         m.update()
         self.chronos.startCounter("START_OPTIMIZE_LAST")
