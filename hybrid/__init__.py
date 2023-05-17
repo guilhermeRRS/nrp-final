@@ -127,7 +127,7 @@ class Hybrid:
         fbeta = 0.1
         numberOfIters = 1000
         numberNurses = 4
-        fNumberNurses = 0.1
+        fNumberNurses = 0.25
         keepVND = True
         while self.chronos.stillValidMIP() and keepVND:
             begginBest = self.penalties.best
@@ -144,21 +144,21 @@ class Hybrid:
             numberNurses += fNumberNurses
 
             triesOfFix = 0
-            while self.chronos.stillValidMIP() and triesOfFix < 5:
-                input("Interanl Fix")
+            while self.chronos.stillValidMIP() and triesOfFix < 10:
+                #input("Interanl Fix")
                 self.run_internal_innerFix(200, numberNurses)
                 triesOfFix += 1
 
             if self.chronos.stillValidMIP():
-                input("Shift all")
+                #input("Shift all")
                 self.run_internal_shiftAll(200)
             if self.chronos.stillValidMIP():
-                input("Interanl balanced")
+                #input("Interanl balanced")
                 self.run_internal_balanced(200)
 
             endBest = self.penalties.best
 
-            if begginBest - endBest < 100:
+            if begginBest - endBest < 1000:
                 keepVND = False
                 
         print("Got in universal improving",keepVND)
