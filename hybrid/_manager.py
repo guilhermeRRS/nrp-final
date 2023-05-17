@@ -39,7 +39,7 @@ def manager_singleDeep(self):
                 break
 
         print("11", numberSuccess)
-        if numberSuccess < 5:
+        if numberSuccess < 2:
             keepsDiving = False
 
 def manager_singleSearch(self, numberOfIters, tol):
@@ -130,11 +130,11 @@ def manager_seqShorterBetter(self):
 def manager_seqShorterWorser(self, beta:int = 1):
     self.startSeqs()
 
-    numberOfIters = 1000
-    optionsNumberNurses = [2]
+    numberOfIters = 100
+    optionsNumberNurses = [3]
 
     numberNurses = list(dict.fromkeys(optionsNumberNurses))
-    rangeOfSequencesOptions = [2]
+    rangeOfSequencesOptions = [3]
     
     for rangeOfSequences in rangeOfSequencesOptions:
         for numberNurses in optionsNumberNurses:
@@ -149,7 +149,7 @@ def manager_seqShorterWorser(self, beta:int = 1):
                         self.commit_sequenceMany(move)
                         self.chronos.printMessage("SW", self.penalties.total)
                         print("SW", self.penalties.total, self.penalties.best)
-                        if self.penalties.total < self.penalties.best:
+                        if newObj < self.penalties.best:
                             self.penalties.best = self.penalties.total
                             for i in range(self.nurseModel.I):
                                 for d in range(self.nurseModel.D):
@@ -183,7 +183,7 @@ def manager_seqShorterWorser(self, beta:int = 1):
 def manager_seqHugeWorser(self, beta, numberNurses):
     self.startSeqs()
 
-    numberOfIters = 250
+    numberOfIters = 100
     optionsNumberNurses = [math.floor(numberNurses)]
     numberOfTries = 1
 
@@ -314,7 +314,7 @@ def run_internal_innerFix(self, time, numberOfNurses: int):
     if gurobiReturn.valid():
         newObj = self.nurseModel.model.m.objVal
         print(self.penalties.best, newObj)
-        if newObj <= self.penalties.best: #here changes both
+        if newObj < self.penalties.best: #here changes both
             #input("@")
             self.penalties.best = newObj
             self.chronos.printMessage("Fixs+", newObj)
@@ -343,8 +343,8 @@ def run_internal_balanced(self, time):
     for i in range(self.nurseModel.I):
         for d in range(1,self.nurseModel.D-1):
             if not ( d-1 in self.helperVariables.projectedX[i] and d+1 in self.helperVariables.projectedX[i] ):
-                if d in self.helperVariables.projectedX[i]:
-                    if random.random() >= 0.5:
+                if d in self.helperVariables.projectedX[i] or (not (d-1 in self.helperVariables.projectedX[i])) or (not (d+1 in self.helperVariables.projectedX[i])):
+                    if random.random() >= 0.75:
                         for t in range(self.nurseModel.T):
                             self.nurseModel.model.x[i][d][t].lb = 0
                             self.nurseModel.model.x[i][d][t].ub = 1
@@ -357,7 +357,7 @@ def run_internal_balanced(self, time):
     
             
     self.nurseModel.model.m.setParam("TimeLimit", min(self.chronos.timeLeftForVND(), time))
-    self.nurseModel.model.m.setParam("BestObjStop", 0.9*self.penalties.best)
+    self.nurseModel.model.m.setParam("BestObjStop", 0.99*self.penalties.best)
     
     self.nurseModel.model.m.update()
     self.chronos.startCounter("START_OPTIMIZE_INNER")
@@ -370,7 +370,7 @@ def run_internal_balanced(self, time):
 
     if gurobiReturn.valid():
         newObj = self.nurseModel.model.m.objVal
-        if newObj <= self.penalties.best: #here changes both
+        if newObj < self.penalties.best: #here changes both
             print(self.penalties.best, newObj)
             self.penalties.best = newObj
             self.chronos.printMessage("Libs+", newObj)

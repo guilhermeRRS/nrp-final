@@ -126,28 +126,23 @@ class Hybrid:
         beta = 0.1
         fbeta = 0.1
         numberOfIters = 1000
-        numberNurses = 4
+        numberNurses = 2
         fNumberNurses = 0.25
         keepVND = True
+        triesVNDmax = 2
+        triesOfFixMax = 10
         while self.chronos.stillValidMIP() and keepVND:
             begginBest = self.penalties.best
             self.setBestAsCurrent()
 
             #self.manager_seqHugeWorser(beta, numberNurses)
             #self.manager_singleSearch(numberOfIters, numberOfIters*0.01)
-            self.manager_seqShorterWorser()
-            self.manager_singleSearch(numberOfIters, numberOfIters*0.025)
-
-            #add a fix per nurse :)
-
-            beta *= fbeta
-            numberNurses += fNumberNurses
-
-            triesOfFix = 0
-            while self.chronos.stillValidMIP() and triesOfFix < 10:
-                #input("Interanl Fix")
-                self.run_internal_innerFix(200, numberNurses)
-                triesOfFix += 1
+            #triesVND = 0
+            #while self.chronos.stillValidMIP() and triesVND < triesVNDmax:
+            #    self.manager_seqShorterWorser()
+            #    self.manager_singleSearch(numberOfIters, numberOfIters*0.025)
+            #    triesVND += 1
+            #triesVNDmax += 0.5
 
             if self.chronos.stillValidMIP():
                 #input("Shift all")
@@ -156,10 +151,36 @@ class Hybrid:
                 #input("Interanl balanced")
                 self.run_internal_balanced(200)
 
+            self.setBestAsCurrent()
+            
+            triesOfFix = 0
+            while self.chronos.stillValidMIP() and triesOfFix < triesOfFixMax:
+                #input("Interanl Fix")
+                self.nurseModel.model.m.setParam("MIPGap", 1/100)
+                self.run_internal_innerFix(200, numberNurses)
+                self.nurseModel.model.m.setParam("MIPGap", 1/10000)
+                triesOfFix += 1
+
+
+            beta *= fbeta
+            numberNurses += fNumberNurses
+
+
             endBest = self.penalties.best
 
             if begginBest - endBest < 1000:
-                keepVND = False
+                if triesOfFixMax < 20:
+                    triesOfFixMax += 1
+
+                    triesVND = 0
+                    while self.chronos.stillValidMIP() and triesVND < triesVNDmax:
+                        self.manager_seqShorterWorser()
+                        self.manager_singleSearch(numberOfIters, numberOfIters*0.001)
+                        triesVND += 1
+
+                else:
+                    #input("Escape")
+                    keepVND = False
                 
         print("Got in universal improving",keepVND)
 
