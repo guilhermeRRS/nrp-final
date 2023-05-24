@@ -118,71 +118,39 @@ class Hybrid:
         self.currentObj = startObj
         self.chronos.startCounter("SETTING_START")
         self.preProcessFromSolution()
-        self.SA_shift_model, self.SA_sm_x, self.SA_preference_total, self.SA_demand = self.generateShiftModel()
+        #self.SA_shift_model, self.SA_sm_x, self.SA_preference_total, self.SA_demand = self.generateShiftModel()
         self.chronos.stopCounter()
         print("Start working")
         
         self.manager_singleDeep()
-        beta = 0.1
-        fbeta = 0.1
-        numberOfIters = 1000
-        numberNurses = 2
-        fNumberNurses = 0.25
-        keepVND = True
-        triesVNDmax = 2
-        triesOfFixMax = 10
-        while self.chronos.stillValidMIP() and keepVND:
-            begginBest = self.penalties.best
-            self.setBestAsCurrent()
+        
+        #m.setParam('OutputFlag', 0)
 
-            #self.manager_seqHugeWorser(beta, numberNurses)
-            #self.manager_singleSearch(numberOfIters, numberOfIters*0.01)
-            #triesVND = 0
-            #while self.chronos.stillValidMIP() and triesVND < triesVNDmax:
-            #    self.manager_seqShorterWorser()
-            #    self.manager_singleSearch(numberOfIters, numberOfIters*0.025)
-            #    triesVND += 1
-            #triesVNDmax += 0.5
-
-            if self.chronos.stillValidMIP():
-                #input("Shift all")
-                self.run_internal_shiftAll(200)
-            if self.chronos.stillValidMIP():
-                #input("Interanl balanced")
-                self.run_internal_balanced(200)
-
-            self.setBestAsCurrent()
+        keepFix = True
+        numberOfNurses = 1
+        numberOfNursesF = 0.5
+        while self.chronos.stillValidMIP() and keepFix:
             
-            triesOfFix = 0
-            while self.chronos.stillValidMIP() and triesOfFix < triesOfFixMax:
-                #input("Interanl Fix")
-                self.nurseModel.model.m.setParam("MIPGap", 1/100)
-                self.run_internal_innerFix(200, numberNurses)
-                self.nurseModel.model.m.setParam("MIPGap", 1/10000)
-                triesOfFix += 1
-
-
-            beta *= fbeta
-            numberNurses += fNumberNurses
-
+            begginBest = self.penalties.best
+            
+            for i in range(10):
+                if not self.chronos.stillValidMIP():
+                    break
+                print("--> ",i)
+                self.run_internal_innerFix(self.chronos.timeLeftForVND(), numberOfNurses, True)
 
             endBest = self.penalties.best
 
+            if begginBest - endBest < 2000:
+                numberOfNurses += numberOfNursesF
+                print("Adding")
+
             if begginBest - endBest < 1000:
-                if triesOfFixMax < 20:
-                    triesOfFixMax += 1
+                    keepFix = False
 
-                    triesVND = 0
-                    while self.chronos.stillValidMIP() and triesVND < triesVNDmax:
-                        self.manager_seqShorterWorser()
-                        self.manager_singleSearch(numberOfIters, numberOfIters*0.001)
-                        triesVND += 1
-
-                else:
-                    #input("Escape")
-                    keepVND = False
+        self.nurseModel.model.m.setParam("MIPGap", 1/10000)
                 
-        print("Got in universal improving",keepVND)
+        print("Got in universal improving",keepFix)
 
         ########################################
 
@@ -191,9 +159,10 @@ class Hybrid:
 
         ########################################
         print("-->",self.startObj, self.penalties.best)
-        self.bestSolToX()
-        m.setParam("TimeLimit", self.chronos.timeLeft())
+        self.bestSolToX(fix = self.chronos.timeLeft() < 10)
+        m.setParam("TimeLimit", max(self.chronos.timeLeft(), 10))
         m.setParam("BestObjStop", 0)
+        #m.setParam('OutputFlag', 1)
         
         m.update()
         self.chronos.startCounter("START_OPTIMIZE_LAST")
