@@ -100,7 +100,7 @@ class Hybrid:
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
 
-    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorterBetter, manager_seqShorterWorser, manager_seqHugeWorser, run_internal_shiftAll, run_internal_innerFix, run_internal_balanced
+    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorterBetter, manager_seqShorterWorser, manager_seqHugeWorser, run_internal_shiftAll, run_internal_innerFix, run_internal_dayInnerFix, run_internal_balanced
 
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         
@@ -127,8 +127,10 @@ class Hybrid:
         #m.setParam('OutputFlag', 0)
 
         keepFix = True
-        numberOfNurses = 1
-        numberOfNursesF = 0.5
+        numberOfDays = 3
+        numberOfDaysF = 0.5
+        numberOfNurses = min(10, self.nurseModel.I)
+        self.nurseModel.model.m.setParam("MIPGap", 1/100)
         while self.chronos.stillValidMIP() and keepFix:
             
             begginBest = self.penalties.best
@@ -137,12 +139,12 @@ class Hybrid:
                 if not self.chronos.stillValidMIP():
                     break
                 print("--> ",i)
-                self.run_internal_innerFix(self.chronos.timeLeftForVND(), numberOfNurses, True)
+                self.run_internal_dayInnerFix(self.chronos.timeLeftForVND(), numberOfDays, numberOfNurses)
 
             endBest = self.penalties.best
 
             if begginBest - endBest < 2000:
-                numberOfNurses += numberOfNursesF
+                numberOfDays += numberOfDaysF
                 print("Adding")
 
             if begginBest - endBest < 1000:

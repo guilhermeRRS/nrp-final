@@ -344,6 +344,75 @@ def run_internal_innerFix(self, time, numberOfNurses: int, runRandom: bool = Tru
     #else:
     #    #input("Discarded internal inner solution")
 
+def run_internal_dayInnerFix(self, time, numberOfDays:int, numberOfNurses: int):
+
+    self.solToX()
+
+    d = random.randint(0, self.nurseModel.D-1)
+    
+    nursesWorking = []
+    for i in range(self.nurseModel.I):
+        if sum(self.currentSol.solution[i][d]) > 0:
+            nursesWorking.append(i)
+
+    if numberOfNurses > len(nursesWorking):
+        nursesFree = nursesWorking
+    else:
+        nursesFree = random.sample(nursesWorking, k = math.floor(numberOfNurses))
+
+    limitsNurse = []
+        
+    for i in nursesFree:
+        dayStart, dayEnd = self.getRangeRewrite(i, d, math.floor(numberOfDays))
+        limitsNurse.append([dayStart, dayEnd])
+        for d in range(dayStart, dayEnd):
+            for t in range(self.nurseModel.T):
+                self.nurseModel.model.x[i][d][t].lb = 0
+                self.nurseModel.model.x[i][d][t].ub = 1
+                self.nurseModel.model.x[i][d][t].start = self.currentSol.solution[i][d][t]
+    
+            
+    self.nurseModel.model.m.setParam("TimeLimit", min(self.chronos.timeLeftForVND(), time))
+    self.nurseModel.model.m.setParam("BestObjStop", 0)
+    
+    self.nurseModel.model.m.update()
+    self.chronos.startCounter("START_OPTIMIZE_INNER")
+    self.nurseModel.model.m.optimize()
+    self.chronos.stopCounter()
+    
+    gurobiReturn = GurobiOptimizedOutput(self.nurseModel.model.m)
+
+    self.chronos.printObj("ORIGIN_SOLVER", "SOLVER_GUROBI_OUTPUT", gurobiReturn)
+
+    if gurobiReturn.valid():
+        newObj = self.nurseModel.model.m.objVal
+        print(self.penalties.best, newObj)
+        if newObj < self.penalties.best: #here changes both
+            #input("@")
+            self.penalties.best = newObj
+            self.chronos.printMessage("Fixs+", newObj)
+            for index in range(len(nursesFree)):
+                dayStart = limitsNurse[index][0]
+                dayEnd = limitsNurse[index][1]
+                i = nursesFree[index]
+                for d in range(dayStart, dayEnd):
+                    for t in range(self.nurseModel.T):
+                        self.tmpBestSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+                        self.currentSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+        else: #here only current
+            #input("!")
+            self.penalties.total = newObj
+            self.chronos.printMessage("Fixs-", newObj)
+            for index in range(len(nursesFree)):
+                dayStart = limitsNurse[index][0]
+                dayEnd = limitsNurse[index][1]
+                i = nursesFree[index]
+                for d in range(dayStart, dayEnd):
+                    for t in range(self.nurseModel.T):
+                        self.currentSol.solution[i][d][t] = 1 if self.nurseModel.model.x[i][d][t].x >= 0.5 else 0
+    #else:
+    #    #input("Discarded internal inner solution")
+
 
 def run_internal_balanced(self, time):
 

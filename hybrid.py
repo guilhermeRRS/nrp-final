@@ -5,7 +5,7 @@ import random
 import logging
 import sys
 from model import NurseModel
-from hybrid import Hybrid
+from hybridZ import Hybrid
 from chronos import Chronos, ErrorExpectionObj
 import sys, os
 
