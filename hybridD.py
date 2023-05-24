@@ -5,7 +5,7 @@ import random
 import logging
 import sys
 from model import NurseModel
-from hybridD import Hybrid
+from hybridNurseFix import Hybrid
 from chronos import Chronos, ErrorExpectionObj
 import sys, os
 
@@ -58,7 +58,7 @@ if True:
     if nurse.s_data and nurse.s_model and nurse.s_solution:
         hybrid = Hybrid(nurseModel = nurse, instance = instance, chronos = chronos)
 
-        success, nurse = hybrid.run(objs[int(instance)-1])
+        success, nurse = hybrid.run(objs[int(instance)-1], improveFirst = False, runRandom = False)
 
         if success:
             chronos.printMessage(ORIGIN_MAIN, SUCCESS_SOLVED)

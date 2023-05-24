@@ -100,7 +100,7 @@ class Hybrid:
     #####main runner
     from ._mainRunner import main_runSingle, main_runSingleMany, main_seqFromModel,  main_seqNursesFromModel
 
-    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, manager_seqShorterBetter, manager_seqShorterWorser, manager_seqHugeWorser, run_internal_shiftAll, run_internal_innerFix, run_internal_balanced
+    from ._manager import startSeqs, startSingles, manager_singleDeep, manager_singleSearch, run_internal_innerFix, run_internal_dayInnerFix, run_internal_all
 
     def __init__(self, nurseModel: NurseModel, instance, chronos: Chronos):
         
@@ -112,7 +112,7 @@ class Hybrid:
         self.tmp = tmp()
 
     
-    def run(self, startObj):
+    def run(self, startObj, improveFirst:bool = True, runRandom:bool = True):
         m = self.nurseModel.model.m
         self.startObj = startObj
         self.currentObj = startObj
@@ -122,38 +122,52 @@ class Hybrid:
         self.chronos.stopCounter()
         print("Start working")
         
-        #self.manager_singleDeep()
+        if improveFirst:
+            self.manager_singleDeep()
+            self.solToX()
         
-        #m.setParam('OutputFlag', 0)
+        m.setParam('OutputFlag', 0)
 
         keepFix = True
-        numberOfNurses = 1
-        numberOfNursesF = 0.5
-        isFrac = 0
+        #numberOfDays = 3
+        #numberOfDaysF = 0.5
+        numberOfNurses = 2
         self.nurseModel.model.m.setParam("MIPGap", 1/100)
         while self.chronos.stillValidMIP() and keepFix:
             
             begginBest = self.penalties.best
             
-            for i in range(10):
-                if not self.chronos.stillValidMIP():
-                    break
-                print("--> ",i)
-                self.run_internal_innerFix(self.chronos.timeLeftForVND(), numberOfNurses, True)
+            if runRandom:
+                for i in range(10):
+                    if not self.chronos.stillValidMIP():
+                        break
+                    print("--> ",i)
+                    time = max(self.chronos.timeLeftForVND(), 1)
+                    self.run_internal_innerFix(time, numberOfNurses)
+            else:
+                for pos in range(0, self.nurseModel.I, numberOfNurses):
+                    if not self.chronos.stillValidMIP():
+                        break
+                    print("--> ",pos)
+                    time = max(self.chronos.timeLeftForVND(), 1)
+                    self.run_internal_innerFix(self.chronos.timeLeftForVND(), numberOfNurses, False, pos)
 
             endBest = self.penalties.best
 
-            if begginBest - endBest < 1000 and isFrac == 1:
-                keepFix = False
-
             if begginBest - endBest < 2000:
-                numberOfNurses += numberOfNursesF
-                isFrac = 1 - isFrac
+                numberOfNurses += 1
+                numberOfNurses = min(numberOfNurses, self.nurseModel.I)
                 print("Adding")
 
+            if begginBest - endBest < 1000:
+                keepFix = False
+
         self.nurseModel.model.m.setParam("MIPGap", 1/10000)
+        m.setParam("BestObjStop", 0)
                 
         print("Got in universal improving",keepFix)
+
+        self.run_internal_all(max(self.chronos.timeLeft(), 1))
 
         ########################################
 
@@ -162,8 +176,8 @@ class Hybrid:
 
         ########################################
         print("-->",self.startObj, self.penalties.best)
-        self.bestSolToX(fix = self.chronos.timeLeft() < 10)
-        m.setParam("TimeLimit", max(self.chronos.timeLeft(), 10))
+        
+        m.setParam("TimeLimit", 43200)
         m.setParam("BestObjStop", 0)
         #m.setParam('OutputFlag', 1)
         
@@ -177,6 +191,8 @@ class Hybrid:
         self.chronos.printObj(ORIGIN_SOLVER, SOLVER_GUROBI_OUTPUT, gurobiReturn)
 
         if gurobiReturn.valid():
+
+            print("||>", m.objVal)
 
             self.nurseModel.solution = Solution().getFromX(self.nurseModel.model.x)
             #self.nurseModel.solution = Solution().getFromLb(self.nurseModel.model.x)

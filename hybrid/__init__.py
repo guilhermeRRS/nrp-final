@@ -112,7 +112,7 @@ class Hybrid:
         self.tmp = tmp()
 
     
-    def run(self, startObj):
+    def run(self, startObj, improveFirst:bool = True, runRandom:bool = True):
         m = self.nurseModel.model.m
         self.startObj = startObj
         self.currentObj = startObj
@@ -122,7 +122,8 @@ class Hybrid:
         self.chronos.stopCounter()
         print("Start working")
         
-        self.manager_singleDeep()
+        if improveFirst:
+            self.manager_singleDeep()
         
         #m.setParam('OutputFlag', 0)
 
@@ -135,11 +136,19 @@ class Hybrid:
             
             begginBest = self.penalties.best
             
-            for i in range(10):
-                if not self.chronos.stillValidMIP():
-                    break
-                print("--> ",i)
-                self.run_internal_dayInnerFix(self.chronos.timeLeftForVND(), numberOfDays, numberOfNurses)
+            if runRandom:
+                for i in range(10):
+                    if not self.chronos.stillValidMIP():
+                        break
+                    print("--> ",i)
+                    self.run_internal_innerFix(self.chronos.timeLeftForVND(), numberOfNurses)
+            else:
+                for pos in range(0, self.nurseModel.I, numberOfNurses):
+                    if not self.chronos.stillValidMIP():
+                        break
+                    print("--> ",pos)
+                    self.run_internal_innerFix(self.chronos.timeLeftForVND(), numberOfNurses, False, pos)
+
 
             endBest = self.penalties.best
 
