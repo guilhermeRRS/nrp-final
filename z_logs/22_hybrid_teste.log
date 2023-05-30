@@ -1,606 +1,556 @@
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:03:29.474094 | INICIALIZATION |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:22.889869 | INICIALIZATION |
 
 ===== CHRONOS_MANAGER =====
-Root time:		2023-05-24 13:03:29.474094
-Time limit:		179.19
+Root time:		2023-05-30 01:32:22.889869
+Time limit:		39.19
 Valid:		True
-TimeLeft:		179.19
+TimeLeft:		39.19
 Size:		0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:03:35.507876 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:28.860252 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
 Name:		SETTING_START
 Log:		True
-Start:		2023-05-24 13:03:35.507876
-Stop Condition:		173.156218
+Start:		2023-05-30 01:32:28.860252
+Stop Condition:		33.219617
 Valid:		True
-TimeLeft:		173.156218
+TimeLeft:		33.219617
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:03:36.699589 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:30.028008 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
 Name:		SETTING_START
 Log:		True
-Start:		2023-05-24 13:03:35.507876
-Stop Condition:		173.156218
+Start:		2023-05-30 01:32:28.860252
+Stop Condition:		33.219617
 Valid:		True
-TimeLeft:		171.964505
+TimeLeft:		32.051861
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:03:37.663074 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:30.051536 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:03:37.663074
-Stop Condition:		171.00101999999998
+Start:		2023-05-30 01:32:30.051536
+Stop Condition:		32.028332999999996
 Valid:		True
-TimeLeft:		171.00002099999998
+TimeLeft:		32.028332999999996
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:02.884024 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:32.401064 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:03:37.663074
-Stop Condition:		171.00101999999998
+Start:		2023-05-30 01:32:30.051536
+Stop Condition:		32.028332999999996
 Valid:		True
-TimeLeft:		145.78007
+TimeLeft:		29.678804999999997
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:04:02.885025 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:32.401064 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		5
 Valid:		True
-Obj:		175450.0
+Obj:		536790.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:04:02.886025 | 
-175450.0
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:32.401064 | 
+536790.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:05.623339 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:32.441507 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:05.623339
-Stop Condition:		143.040755
+Start:		2023-05-30 01:32:32.441507
+Stop Condition:		29.638361999999997
 Valid:		True
-TimeLeft:		143.040755
+TimeLeft:		29.638361999999997
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:15.794155 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:35.143699 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:05.623339
-Stop Condition:		143.040755
+Start:		2023-05-30 01:32:32.441507
+Stop Condition:		29.638361999999997
 Valid:		True
-TimeLeft:		132.868943
+TimeLeft:		26.936169999999997
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:04:15.795151 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:35.143699 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		3
 Valid:		True
-Obj:		171112.0
+Obj:		533948.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:04:15.796149 | 
-171112.0
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:35.143699 | 
+533948.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:18.502722 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:35.175421 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:18.502722
-Stop Condition:		130.161372
+Start:		2023-05-30 01:32:35.175421
+Stop Condition:		26.904448
 Valid:		True
-TimeLeft:		130.161372
+TimeLeft:		26.904448
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:28.654748 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:37.572853 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:18.502722
-Stop Condition:		130.161372
+Start:		2023-05-30 01:32:35.175421
+Stop Condition:		26.904448
 Valid:		True
-TimeLeft:		120.009346
+TimeLeft:		24.507016
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:04:28.654748 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:37.572853 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		2
 Valid:		True
-Obj:		166975.0
+Obj:		531523.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:04:28.655748 | 
-166975.0
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:37.572853 | 
+531523.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:30.793961 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:37.606106 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:30.793961
-Stop Condition:		117.870133
+Start:		2023-05-30 01:32:37.606106
+Stop Condition:		24.473762999999998
 Valid:		True
-TimeLeft:		117.870133
+TimeLeft:		24.472762999999997
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:40.946666 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:40.061627 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:30.793961
-Stop Condition:		117.870133
+Start:		2023-05-30 01:32:37.606106
+Stop Condition:		24.473762999999998
 Valid:		True
-TimeLeft:		107.71643
+TimeLeft:		22.018241999999997
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:04:40.947664 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:40.061627 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		2
 Valid:		True
-Obj:		163457.0
+Obj:		528699.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:04:40.949674 | 
-163457.0
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:40.061627 | 
+528699.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:43.113069 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:40.093189 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:43.113069
-Stop Condition:		105.551025
+Start:		2023-05-30 01:32:40.093189
+Stop Condition:		21.986679999999996
 Valid:		True
-TimeLeft:		105.551025
+TimeLeft:		21.985691999999997
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:53.306906 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:42.255783 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:43.113069
-Stop Condition:		105.551025
+Start:		2023-05-30 01:32:40.093189
+Stop Condition:		21.986679999999996
 Valid:		True
-TimeLeft:		95.357188
+TimeLeft:		19.824085999999998
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:04:53.306906 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:42.255783 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		2
 Valid:		True
-Obj:		159215.0
+Obj:		525553.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:04:53.307896 | 
-159215.0
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:42.256779 | 
+525553.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:04:55.464413 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:42.277957 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:55.464413
-Stop Condition:		93.199681
+Start:		2023-05-30 01:32:42.276936
+Stop Condition:		19.802933
 Valid:		True
-TimeLeft:		93.199681
+TimeLeft:		19.801911999999998
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:05.609667 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:44.403632 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:04:55.464413
-Stop Condition:		93.199681
+Start:		2023-05-30 01:32:42.276936
+Stop Condition:		19.802933
 Valid:		True
-TimeLeft:		83.053426
+TimeLeft:		17.676237
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:05:05.610668 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:44.403632 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		2
 Valid:		True
-Obj:		153958.0
+Obj:		522215.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:05:05.612677 | 
-153958.0
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:44.403632 | 
+522215.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:07.643712 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:44.433452 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:05:07.643712
-Stop Condition:		81.020382
+Start:		2023-05-30 01:32:44.433452
+Stop Condition:		17.646416999999996
 Valid:		True
-TimeLeft:		81.020382
+TimeLeft:		17.645417999999996
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:17.816512 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:46.847680 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:05:07.643712
-Stop Condition:		81.020382
+Start:		2023-05-30 01:32:44.433452
+Stop Condition:		17.646416999999996
 Valid:		True
-TimeLeft:		70.847582
+TimeLeft:		15.232188999999996
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:05:17.816512 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:46.847680 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		2
 Valid:		True
-Obj:		152532.0
+Obj:		519481.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:05:17.817510 | 
-152532.0
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:46.847680 | 
+519481.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:20.236762 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:46.890908 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:05:20.236762
-Stop Condition:		68.42733199999999
+Start:		2023-05-30 01:32:46.890908
+Stop Condition:		15.188960999999999
 Valid:		True
-TimeLeft:		68.42733199999999
+TimeLeft:		15.187954999999999
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:30.390120 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:49.087596 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:05:20.236762
-Stop Condition:		68.42733199999999
+Start:		2023-05-30 01:32:46.890908
+Stop Condition:		15.188960999999999
 Valid:		True
-TimeLeft:		58.273973999999995
+TimeLeft:		12.992272999999999
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:05:30.392120 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:49.087596 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		2
 Valid:		True
-Obj:		148091.99985024965
+Obj:		516761.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:05:30.394121 | 
-148091.99985024965
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:49.087596 | 
+516761.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:32.827184 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:49.127043 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:05:32.827184
-Stop Condition:		55.83691
+Start:		2023-05-30 01:32:49.127043
+Stop Condition:		12.952825999999998
 Valid:		True
-TimeLeft:		55.83691
+TimeLeft:		12.952825999999998
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:42.970105 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:51.501016 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:05:32.827184
-Stop Condition:		55.83691
+Start:		2023-05-30 01:32:49.127043
+Stop Condition:		12.952825999999998
 Valid:		True
-TimeLeft:		45.692987
+TimeLeft:		10.578852999999999
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:05:42.972103 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:51.501016 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		2
 Valid:		True
-Obj:		143733.0
+Obj:		514410.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:05:42.972103 | 
-143733.0
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:51.515871 | 
+514410.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:44.962243 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:51.540003 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:05:44.962243
-Stop Condition:		43.701851000000005
+Start:		2023-05-30 01:32:51.540003
+Stop Condition:		10.539865999999996
 Valid:		True
-TimeLeft:		43.693817
+TimeLeft:		10.538892999999996
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:55.139787 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:53.829496 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		START_OPTIMIZE_INNERd
 Log:		True
-Start:		2023-05-24 13:05:44.962243
-Stop Condition:		43.701851000000005
+Start:		2023-05-30 01:32:51.540003
+Stop Condition:		10.539865999999996
 Valid:		True
-TimeLeft:		33.52430700000001
+TimeLeft:		8.250372999999996
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:05:55.139787 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:53.829496 | SOLVER_GUROBI_OUTPUTd |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
+Status:		2
+SolCount:		2
 Valid:		True
-Obj:		140793.99995160737
+Obj:		512076.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:05:55.141787 | 
-140793.99995160737
+>>>>> INFO | dFixs+ | 2023-05-30 01:32:53.829496 | 
+512076.0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:05:57.819141 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:53.946069 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		OPTIMIZE_INNERn
 Log:		True
-Start:		2023-05-24 13:05:57.819141
-Stop Condition:		30.844953000000004
+Start:		2023-05-30 01:32:53.946069
+Stop Condition:		8.133799999999997
 Valid:		True
-TimeLeft:		30.844953000000004
+TimeLeft:		8.133799999999997
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:06:08.044782 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:55.276974 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		OPTIMIZE_INNERn
 Log:		True
-Start:		2023-05-24 13:05:57.819141
-Stop Condition:		30.844953000000004
+Start:		2023-05-30 01:32:53.946069
+Stop Condition:		8.133799999999997
 Valid:		True
-TimeLeft:		20.618314000000005
+TimeLeft:		6.802894999999998
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:06:08.045780 | SOLVER_GUROBI_OUTPUT |
-
-===== GUROBI_OPTIMIZE_OUTPUT =====
-Status:		9
-SolCount:		10
-Valid:		True
-Obj:		138344.0
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> INFO | Fixs+ | 2023-05-24 13:06:08.047775 | 
-138344.0
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:06:11.265343 | CHRONOS_MARK_START |
-
-===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
-Log:		True
-Start:		2023-05-24 13:06:11.265343
-Stop Condition:		17.398751000000004
-Valid:		True
-TimeLeft:		17.398751000000004
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:06:12.797335 | CHRONOS_MARK_STOP |
-
-===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
-Log:		True
-Start:		2023-05-24 13:06:11.265343
-Stop Condition:		17.398751000000004
-Valid:		True
-TimeLeft:		15.866759000000004
-===============
-
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:06:12.798322 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:32:55.277968 | SOLVER_GUROBI_OUTPUTn |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
 Status:		9
 SolCount:		1
 Valid:		True
-Obj:		138344.0
+Obj:		512076.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs- | 2023-05-24 13:06:12.798322 | 
-138344.0
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:06:16.089204 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:32:57.348452 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		OPTIMIZE_ALL
 Log:		True
-Start:		2023-05-24 13:06:16.089204
-Stop Condition:		12.57489000000001
+Start:		2023-05-30 01:32:57.348452
+Stop Condition:		4.731417
 Valid:		True
-TimeLeft:		12.573890000000011
+TimeLeft:		4.731417
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:06:31.371945 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:33:04.207713 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
-Name:		START_OPTIMIZE_INNER
+Name:		OPTIMIZE_ALL
 Log:		True
-Start:		2023-05-24 13:06:16.089204
-Stop Condition:		12.57489000000001
+Start:		2023-05-30 01:32:57.348452
+Stop Condition:		4.731417
 Valid:		False
 TimeLeft:		0
 ===============
@@ -608,30 +558,25 @@ TimeLeft:		0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:06:31.371945 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:33:04.207713 | SOLVER_GUROBI_OUTPUT |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
 Status:		9
-SolCount:		2
+SolCount:		1
 Valid:		True
-Obj:		133380.0
+Obj:		512076.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | Fixs+ | 2023-05-24 13:06:31.371945 | 
-133380.0
-<<<<<<<<<<<<<<<
-
-
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:06:33.458663 | CHRONOS_MARK_START |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:33:08.151578 | CHRONOS_MARK_START |
 
 ===== CHRONOS_COUNTER =====
 Name:		START_OPTIMIZE_LAST
 Log:		True
-Start:		2023-05-24 13:06:33.458663
-Stop Condition:		-4.794568999999996
+Start:		2023-05-30 01:33:08.151578
+Stop Condition:		-6.071709000000006
 Valid:		False
 TimeLeft:		0
 ===============
@@ -639,13 +584,13 @@ TimeLeft:		0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:06:35.323603 | CHRONOS_MARK_STOP |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:33:10.548751 | CHRONOS_MARK_STOP |
 
 ===== CHRONOS_COUNTER =====
 Name:		START_OPTIMIZE_LAST
 Log:		True
-Start:		2023-05-24 13:06:33.458663
-Stop Condition:		-4.794568999999996
+Start:		2023-05-30 01:33:08.151578
+Stop Condition:		-6.071709000000006
 Valid:		False
 TimeLeft:		0
 ===============
@@ -653,33 +598,33 @@ TimeLeft:		0
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_SOLVER | 2023-05-24 13:06:35.323603 | SOLVER_GUROBI_OUTPUT |
+>>>>> OBJ | ORIGIN_SOLVER | 2023-05-30 01:33:10.548751 | SOLVER_GUROBI_OUTPUT |
 
 ===== GUROBI_OPTIMIZE_OUTPUT =====
 Status:		2
 SolCount:		1
 Valid:		True
-Obj:		133380.0
+Obj:		512076.0
 ===============
 
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | ORIGIN_MAIN | 2023-05-24 13:06:35.805408 | 
+>>>>> INFO | ORIGIN_MAIN | 2023-05-30 01:33:11.297890 | 
 SUCCESS_SOLVED
 <<<<<<<<<<<<<<<
 
 
->>>>> INFO | ORIGIN_MAIN | 2023-05-24 13:06:35.840187 | 
+>>>>> INFO | ORIGIN_MAIN | 2023-05-30 01:33:11.340129 | 
 SOLUTION_PRINTING_SUCCESS
 <<<<<<<<<<<<<<<
 
 
->>>>> OBJ | ORIGIN_CHRONOS | 2023-05-24 13:06:35.840187 | FINISHED |
+>>>>> OBJ | ORIGIN_CHRONOS | 2023-05-30 01:33:11.340129 | FINISHED |
 
 ===== CHRONOS_MANAGER =====
-Root time:		2023-05-24 13:03:29.474094
-Time limit:		179.19
+Root time:		2023-05-30 01:32:22.889869
+Time limit:		39.19
 Valid:		False
 TimeLeft:		0
 Size:		0

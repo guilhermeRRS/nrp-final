@@ -58,7 +58,7 @@ if True:
     if nurse.s_data and nurse.s_model and nurse.s_solution:
         hybrid = Hybrid(nurseModel = nurse, instance = instance, chronos = chronos)
 
-        success, nurse = hybrid.run(objs[int(instance)-1], improveFirst = True, runRandom = True)
+        success, nurse = hybrid.run(objs[int(instance)-1], runRandom = False, noRelax = True)
 
         if success:
             chronos.printMessage(ORIGIN_MAIN, SUCCESS_SOLVED)
