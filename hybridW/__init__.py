@@ -132,7 +132,7 @@ class Hybrid:
             
             begginBest = self.penalties.best
             
-            if nurseBefore:
+            if not nurseBefore:
 
                 if not runRandom:
                     for i in range(10):
